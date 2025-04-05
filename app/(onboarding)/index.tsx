@@ -6,6 +6,7 @@ import garbage from '@/assets/images/garbage.png'
 import {StatusBar} from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FontSize from '@/constants/FontSize'
+import { router } from 'expo-router'
 
 const index = () => {
   return (
@@ -23,8 +24,8 @@ const index = () => {
       <View style={{ bottom: 0, position: "absolute", flex: 1, marginVertical: 20, zIndex: 1, gap:10 }}>
         <Text style={{flex:1, fontSize: FontSize.paragraph_fmedium, color: "#fff", fontFamily: "Satoshi-Light"}}>Let's Embark on your journey towards a cleaner, greener future by taking the first step today. <Text style={{color: Colors.dark.primary, fontFamily: "Satoshi-Medium"}}>Greenloopers</Text>!</Text>
         <View style={{width: "100%"}}>
-          <Button title='Register' type="normal"/>
-          <Button title='Login' type="outline"/>
+          <Button title='Register' type="normal" onPress={() => router.navigate("/(auth)/signup")}/>
+          <Button title='Login' type="outline" onPress={() => router.navigate("/(auth)/signin")}/>
         </View>
       </View>
       <StatusBar style='auto'/>

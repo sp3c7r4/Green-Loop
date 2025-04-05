@@ -3,6 +3,7 @@ import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import logo from '@/assets/images/logo_text.png'
+import { StatusBar } from "expo-status-bar";
 
 export default function Index() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -28,6 +29,7 @@ export default function Index() {
       }}
     >
       <Image source={logo} resizeMode="contain" style={{width: 250, height: 50}}/>
+      <StatusBar style="auto"/>
     </View>
   );
 }
