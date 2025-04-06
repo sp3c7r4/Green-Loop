@@ -11,7 +11,7 @@ export default function Index() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShouldRedirect(true);
-    }, 3000);
+    }, 200);
     return () => clearTimeout(timer);
   }, []);
 
