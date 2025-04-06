@@ -3,19 +3,26 @@ import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import logo from '@/assets/images/logo_text.png'
+import useAuthStore from "@/auth/authStore";
 import { StatusBar } from "expo-status-bar";
 
 export default function Index() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated)
+  const { loginAuthState } = useAuthStore()
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    loginAuthState()
+    const timer = setTimeout( async () => {
       setShouldRedirect(true);
     }, 200);
     return () => clearTimeout(timer);
   }, []);
 
   if (shouldRedirect) {
+    if(isAuthenticated) {
+      return <Redirect href="/(tabs)/home"/>
+    }
     return <Redirect href="/(onboarding)" />;
   }
 

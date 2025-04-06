@@ -4,7 +4,8 @@ export const Colors = {
   light: {
     primary: "#3CC687", // Green
     secondary: "#50D699", // Light Green
-    background: "#FFFFFF", // White
+    background: "#F0F1F3", // White
+    overlay: "#F9F9F9",
     text: "#212121", // Dark Gray
     border: "#E0E0E0", // Light Gray
   },

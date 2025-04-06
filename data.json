@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "name": "E-Waste Collection Drive",
+    "date": "2025-04-15",
+    "time": "10:00 AM",
+    "location": "GreenTech Recycling Center, Lagos",
+    "image_url": "https://example.com/images/ewaste-drive.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Sustainable Tech Workshop",
+    "date": "2025-05-02",
+    "time": "2:30 PM",
+    "location": "EcoHub, Nairobi",
+    "image_url": "https://example.com/images/tech-workshop.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Electronic Repair & Reuse Fair",
+    "date": "2025-06-10",
+    "time": "11:00 AM",
+    "location": "Recyclers Plaza, Accra",
+    "image_url": "https://example.com/images/repair-fair.jpg"
+  },
+  {
+    "id": 4,
+    "name": "E-Waste Awareness Seminar",
+    "date": "2025-07-20",
+    "time": "9:00 AM",
+    "location": "Tech Park, Cape Town",
+    "image_url": "https://example.com/images/awareness-seminar.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Green Electronics Expo",
+    "date": "2025-08-05",
+    "time": "1:00 PM",
+    "location": "Innovation Hub, Johannesburg",
+    "image_url": "https://example.com/images/electronics-expo.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Battery Recycling Awareness",
+    "date": "2025-09-12",
+    "time": "3:00 PM",
+    "location": "EcoCity Mall, Kigali",
+    "image_url": "https://example.com/images/battery-recycling.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Tech Waste Policy Discussion",
+    "date": "2025-10-18",
+    "time": "10:30 AM",
+    "location": "City Hall, Nairobi",
+    "image_url": "https://example.com/images/policy-discussion.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Gadget Recycling Workshop",
+    "date": "2025-11-22",
+    "time": "2:00 PM",
+    "location": "Green Future Center, Accra",
+    "image_url": "https://example.com/images/gadget-workshop.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Eco-Friendly Tech Innovations",
+    "date": "2025-12-05",
+    "time": "4:00 PM",
+    "location": "TechWorld Conference Hall, Lagos",
+    "image_url": "https://example.com/images/eco-tech.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Zero-Waste Electronics Fair",
+    "date": "2026-01-15",
+    "time": "11:30 AM",
+    "location": "Circular Economy Hub, Nairobi",
+    "image_url": "https://example.com/images/zero-waste-fair.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Upcycling Old Devices Meetup",
+    "date": "2026-02-28",
+    "time": "5:00 PM",
+    "location": "Innovation Center, Cape Town",
+    "image_url": "https://example.com/images/upcycling-meetup.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Smart E-Waste Management Forum",
+    "date": "2026-03-20",
+    "time": "9:00 AM",
+    "location": "Sustainable Future Hall, Lagos",
+    "image_url": "https://example.com/images/ewaste-management.jpg"
+  }
+]
