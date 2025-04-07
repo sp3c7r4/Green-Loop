@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList } from 'react-native'
+import { View, Text, Image, FlatList, Pressable } from 'react-native'
 import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -8,6 +8,13 @@ import FontSize from '@/constants/FontSize'
 import ProductTile from '@/components/ProductTile'
 import data from '@/data.json'
 // import {FlashList} from '@shopify/flash-list'
+const headerTiles = [
+  { "id": "trade", "image": require("@/assets/images/trade.png") },
+  { "id": "market", "image": require("@/assets/images/market.png") },
+  { "id": "recycling", "image": require("@/assets/images/ewaste-recycling.png") },
+  { "id": "programs", "image": require("@/assets/images/programs.png") },
+  { "id": "rebuild", "image": require("@/assets/images/rebuild.png") }
+]
 
 const home = () => {
   return (
@@ -16,9 +23,28 @@ const home = () => {
           <Text style={{color: "#fff", fontFamily: "Satoshi-Bold", fontSize: 19}}>Hello <Text style={{color: Colors.light.primary}}>Satar</Text></Text>
           <Text style={{color: "#fff", fontFamily: "Satoshi-Medium", fontSize: 10}}>{"Welcome to Greenloop"}</Text>
         </View>
-      <View style={{ height: "20%", backgroundColor: "#111"}}>
+      <View style={{ height: 120, backgroundColor: "#111"}}>
         {/* <HomeHeader/> */}
-        <Image source={require('@/assets/images/header_1.png')} resizeMode='contain' style={{width: "100%", height: "100%"}}/>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+          <FlatList 
+            data={headerTiles}
+            horizontal={true}
+            keyExtractor={(item) => item.id.toString()}
+            scrollEnabled={true}
+            showsHorizontalScrollIndicator={false}
+            style={{ flexGrow: 1 }} // Ensure the FlatList has a defined height
+            contentContainerStyle={{ paddingHorizontal: 10, marginTop: 10, height: 120 }} // Add padding for better spacing
+            renderItem={({item, index}) => (
+            <Pressable style={{ marginHorizontal: 3}}>
+              <Image 
+              key={index} 
+              source={item.image} 
+              resizeMode='contain' 
+              style={{ width: 100, height: 110 }}
+              />
+            </Pressable>)}
+            />
+        </View>
       </View>
       <View>
         <View style={{ paddingTop: 10, marginHorizontal: 16 }}>
@@ -28,7 +54,8 @@ const home = () => {
         <View style={{ paddingTop: 10, marginHorizontal: 16 }}>
           <Text style={{color: Colors.light.primary, fontFamily: "Satoshi-Medium", fontSize: 15}}>Products</Text>
           <FlatList
-          ListHeaderComponent={<View style={{height: 20}}/>}
+            ListHeaderComponent={<View style={{height: 20}}/>}
+            ListFooterComponent={<View style={{height: 270}}/>}
             data={data} // Assuming your data.json has a "products" array
             renderItem={({ item }) => <ProductTile data={item} />} // Pass each product to ProductTile
             keyExtractor={(item) => item.id.toString()} // Ensure each item has a unique key
