@@ -58,7 +58,7 @@ const home = () => {
           <Text style={{color: "#fff", fontFamily: "Satoshi-Medium", fontSize: 10, opacity: 0.2}}>Turn trash into cash the IDEAL way.</Text>
         </View>
         <View style={{ paddingTop: 10, marginHorizontal: 16 }}>
-          <Text style={{color: Colors.light.primary, fontFamily: "Satoshi-Bold", fontSize: 18}}>Products</Text>
+          <Text style={{color: Colors.light.primary, fontFamily: "Satoshi-Bold", fontSize: 18 }}>Products</Text>
            <FlatList
             ListFooterComponent={<View style={{height: 300}}/>}
             ListHeaderComponent={<View style={{height: 10}}/>}

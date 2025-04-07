@@ -25,9 +25,9 @@ const ProductTile = ({data}:{data: DataProps}) => {
             <Text style={{fontFamily: "Satoshi-Bold", color: "#fff", fontSize: 8}}>Recycler</Text>
             <Text style={{color: "#3CC687", fontFamily: "Satoshi-Regular", fontSize: 8}}>Spectra Gee</Text>
           </View>
-          <View style={{flexDirection: "row", alignItems: "center", gap: 4}}>
+          <View style={{flexDirection: "row", alignItems: "center", gap: 2}}>
             <Image source={require("@/assets/images/location_1.png")} style={{width: 8, height: 8}} resizeMode='contain'/>
-            <Text style={{fontFamily: "Satoshi-Medium", fontSize: 10, color: "#fff"}}>{data.location.split(" ")[data.location.split(" ").length-1]}</Text>
+            <Text style={{fontFamily: "Satoshi-Medium", fontSize: 8, color: "#fff"}}>{data.location.split(" ")[data.location.split(" ").length-1]}</Text>
           </View>
         </View>
       </View>
