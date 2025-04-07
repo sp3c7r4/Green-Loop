@@ -5,7 +5,8 @@
     "date": "2025-04-15",
     "time": "10:00 AM",
     "location": "GreenTech Recycling Center, Lagos",
-    "image_url": "https://example.com/images/ewaste-drive.jpg"
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "Join us for a dedicated drive to collect and recycle electronic waste responsibly. This event aims to reduce the environmental impact of e-waste by encouraging proper disposal and recycling practices. Bring your old gadgets and help us make a difference!"
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "date": "2025-05-02",
     "time": "2:30 PM",
     "location": "EcoHub, Nairobi",
-    "image_url": "https://example.com/images/tech-workshop.jpg"
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "Discover innovative ways to integrate sustainability into technology at this hands-on workshop. Learn about eco-friendly practices, sustainable product design, and how to minimize the environmental footprint of tech innovations."
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "date": "2025-06-10",
     "time": "11:00 AM",
     "location": "Recyclers Plaza, Accra",
-    "image_url": "https://example.com/images/repair-fair.jpg"
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "This fair promotes the repair and reuse of electronic devices to extend their lifecycle and reduce waste. Join us to learn repair techniques, explore reuse opportunities, and contribute to a circular economy."
   },
   {
     "id": 4,
@@ -29,7 +32,8 @@
     "date": "2025-07-20",
     "time": "9:00 AM",
     "location": "Tech Park, Cape Town",
-    "image_url": "https://example.com/images/awareness-seminar.jpg"
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "Attend this seminar to gain insights into the growing issue of e-waste and its impact on the environment. Experts will discuss challenges, solutions, and the role of individuals and organizations in tackling e-waste effectively."
   },
   {
     "id": 5,
@@ -37,7 +41,8 @@
     "date": "2025-08-05",
     "time": "1:00 PM",
     "location": "Innovation Hub, Johannesburg",
-    "image_url": "https://example.com/images/electronics-expo.jpg"
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "Explore the latest eco-friendly electronics and sustainable tech solutions at this expo. Meet innovators, discover green technologies, and learn how the industry is evolving to address environmental concerns."
   },
   {
     "id": 6,
@@ -45,7 +50,8 @@
     "date": "2025-09-12",
     "time": "3:00 PM",
     "location": "EcoCity Mall, Kigali",
-    "image_url": "https://example.com/images/battery-recycling.jpg"
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "Learn about the importance of proper battery recycling and how it can prevent environmental hazards. This event will provide practical tips and resources for safely disposing of used batteries."
   },
   {
     "id": 7,
@@ -53,7 +59,8 @@
     "date": "2025-10-18",
     "time": "10:30 AM",
     "location": "City Hall, Nairobi",
-    "image_url": "https://example.com/images/policy-discussion.jpg"
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "Join policymakers, industry leaders, and environmental advocates for a discussion on effective strategies and policies for managing tech waste. Share your ideas and contribute to shaping a sustainable future."
   },
   {
     "id": 8,
@@ -61,7 +68,8 @@
     "date": "2025-11-22",
     "time": "2:00 PM",
     "location": "Green Future Center, Accra",
-    "image_url": "https://example.com/images/gadget-workshop.jpg"
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "Participate in this hands-on workshop to learn how to recycle old gadgets sustainably. Gain practical skills and knowledge to turn your outdated devices into valuable resources."
   },
   {
     "id": 9,
@@ -69,7 +77,8 @@
     "date": "2025-12-05",
     "time": "4:00 PM",
     "location": "TechWorld Conference Hall, Lagos",
-    "image_url": "https://example.com/images/eco-tech.jpg"
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "Discover groundbreaking innovations in eco-friendly technology. This event showcases advancements that prioritize sustainability and environmental responsibility in the tech industry."
   },
   {
     "id": 10,
@@ -77,7 +86,8 @@
     "date": "2026-01-15",
     "time": "11:30 AM",
     "location": "Circular Economy Hub, Nairobi",
-    "image_url": "https://example.com/images/zero-waste-fair.jpg"
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "Celebrate zero-waste practices in electronics at this fair. Explore innovative solutions, meet like-minded individuals, and learn how to contribute to a waste-free future in the tech industry."
   },
   {
     "id": 11,
@@ -85,14 +95,16 @@
     "date": "2026-02-28",
     "time": "5:00 PM",
     "location": "Innovation Center, Cape Town",
-    "image_url": "https://example.com/images/upcycling-meetup.jpg"
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "Join a community of enthusiasts to share ideas and techniques for upcycling old electronic devices. Learn creative ways to give new life to outdated gadgets while reducing waste."
   },
   {
     "id": 12,
     "name": "Smart E-Waste Management Forum",
     "date": "2026-03-20",
     "time": "9:00 AM",
-    "location": "Sustainable Future Hall, Lagos",
-    "image_url": "https://example.com/images/ewaste-management.jpg"
+    "location": "Sustainable Future",
+    "image_url": "https://miro.medium.com/v2/resize:fit:4800/format:webp/0*DzxxY7308kvoikat.jpeg",
+    "content": "Engage with experts and stakeholders at this forum focused on smart e-waste management. Explore innovative approaches, share best practices, and collaborate on solutions to address the growing e-waste challenge."
   }
 ]
