@@ -1,8 +1,7 @@
 import { Colors } from "@/constants/color";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
-import { Image, Text, View } from "react-native";
-import logo from '@/assets/images/logo_text.png'
+import { Image, View } from "react-native";
 import useAuthStore from "@/auth/authStore";
 import { StatusBar } from "expo-status-bar";
 
@@ -21,7 +20,7 @@ export default function Index() {
 
   if (shouldRedirect) {
     if(isAuthenticated) {
-      return <Redirect href="/(tabs)/home"/>
+      return <Redirect href="/(tabs)/cart"/>
     }
     return <Redirect href="/(onboarding)" />;
   }
@@ -35,7 +34,7 @@ export default function Index() {
         backgroundColor: Colors.dark.background
       }}
     >
-      <Image source={logo} resizeMode="contain" style={{width: 250, height: 50}}/>
+      <Image source={require('@/assets/images/logo_text.png')} resizeMode="contain" style={{width: 250, height: 50}}/>
       <StatusBar style="auto"/>
     </View>
   );

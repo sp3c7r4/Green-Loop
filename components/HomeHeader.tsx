@@ -1,6 +1,5 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
-import FastImage from 'react-native-fast-image'
 
 const HomeHeader = () => {
   return (

@@ -30,8 +30,10 @@ const home = () => {
         <SearchBox value={searchText} onPress={() => console.log(searchText)} onChangeText={(value)=>setSearchText(value)}/>
       </View>
       <View style={{ height: 120, backgroundColor: "#111"}}>
-        {/* <HomeHeader/> */}
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+          <View style={{ width: 100, alignItems: "center", justifyContent: "center", height: 110, marginLeft: 16, marginTop: 10, backgroundColor: "#50D699", borderWidth: 1, borderColor: "rgba(21, 232, 119, 0.5)",  borderRadius: 4 }}>
+            <Text style={{fontFamily: "Satoshi-Medium"}}>Blog Posts</Text>
+          </View>
           <FlatList 
             data={headerTiles}
             horizontal={true}
@@ -39,9 +41,9 @@ const home = () => {
             scrollEnabled={true}
             showsHorizontalScrollIndicator={false}
             style={{ flexGrow: 1 }} // Ensure the FlatList has a defined height
-            contentContainerStyle={{ paddingHorizontal: 10, marginTop: 10, height: 120 }} // Add padding for better spacing
+            contentContainerStyle={{ paddingHorizontal: 2, marginTop: 10, height: 120 }} // Add padding for better spacing
             renderItem={({item, index}) => (
-            <Pressable style={{ marginHorizontal: 3}}>
+            <Pressable style={{ marginHorizontal: 0}}>
               <Image 
               key={index} 
               source={item.image} 
@@ -89,7 +91,6 @@ const home = () => {
           /> */}
         </View>
       </View>
-      <StatusBar style="light" backgroundColor='#111'/>
     </SafeAreaView>
   )
 }
