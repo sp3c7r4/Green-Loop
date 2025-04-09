@@ -1,9 +1,8 @@
 import { View, Text, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Colors } from '@/constants/color'
-import SearchBox from '@/components/SearchBox'
 import CartContainer from '@/components/CartContainer'
 import AiBubble from '@/components/AiBubble'
 import data from '@/data.json'
@@ -28,12 +27,12 @@ const cart = () => {
       return [...prev, ...(data as DataProps[])]
     })
   }, [])
-  function onPressDelete(id: number): void {
-    setCartItems(prev => {
-      const filter = prev.filter((item) => item.id !== id)
-      return filter
-    })
-  }
+  const onPressDelete = useCallback((id: number): void => {
+      setCartItems(prev => {
+        const filter = prev.filter((item) => item.id !== id);
+        return filter;
+      });
+    }, []);
   
   function onPressRequest(id: number): void {
     console.log(id)

@@ -1,15 +1,15 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, DimensionValue } from 'react-native'
 import React from 'react'
 import { Colors } from '@/constants/color'
 import FontSize from '@/constants/FontSize'
 
-const Button = ({title,buttonTextColor, color=Colors.light.primary, onPress, type}: {buttonTextColor?: string, title: string, color?: string, onPress?: () => void, type: 'outline' | 'normal'}) => {
+const Button = ({title,buttonTextColor, color=Colors.light.primary, width="100%", onPress, type}: {width?: DimensionValue, buttonTextColor?: string, title: string, color?: string, onPress?: () => void, type: 'outline' | 'normal'}) => {
   return (
     <TouchableOpacity 
       onPress={onPress} 
       style={{ 
+        width, 
         marginVertical: 3, 
-        width: "100%", 
         height: 47, 
         backgroundColor: type === 'normal' ? color || Colors.dark.primary : 'transparent', 
         alignItems: "center", 
