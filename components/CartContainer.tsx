@@ -43,9 +43,10 @@ const CartContainer = ({data, onPressDelete, onPressRequest}:{data: DataProps, o
                 <Text style={{ fontSize: 8, opacity: 0.4, marginLeft: 35, fontFamily: "Satoshi-Medium", color: "#fff" }}>{data.date} {data.time}</Text>
               </View>
           </View>
-          <View style={{flex: 1, borderWidth: 1, position: "absolute", bottom: 0, left: 0, height: "70%", width: "60%", marginBottom: 7 }}>
-            <View>
-              
+          <View style={{flex: 1, position: "absolute", bottom: 0, left: 0, height: "70%", width: "60%", marginBottom: 7 }}>
+            <View style={{gap: 3}}>
+              <Text style={{fontFamily: "Satoshi-Bold", color: "#fff", paddingLeft: 10}}>{data.name}</Text>
+              <Text style={{fontFamily: "Satoshi-Regular", color: "#fff", paddingLeft: 10, fontSize: 9}}>{data.content}</Text>
             </View>
           </View>
             <View style={{ flex: 1, gap: 5, alignItems: "flex-end", justifyContent: "center", paddingRight: 10}}>
