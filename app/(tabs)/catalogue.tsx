@@ -105,11 +105,10 @@ const catalogue = () => {
         snapPoints={snapPoints}
         enableDynamicSizing={false}
         onChange={handleSheetChange}
+        backgroundStyle={{backgroundColor: Colors.light.background}}
       >
-        <BottomSheetScrollView contentContainerStyle={{ backgroundColor: "#F0F1F3", paddingHorizontal: 16 }}>
-          <View>
-            <AddCatalogueItem/>
-          </View>
+        <BottomSheetScrollView contentContainerStyle={{ backgroundColor: Colors.light.background, paddingHorizontal: 16, flex: 1, paddingVertical: 20 }}>
+          <AddCatalogueItem/>
           <View style={{flexDirection: "row", justifyContent: "space-between"}}>
             <Button type="outline" color="#f21160" title='close' onPress={closeBottomSheet} width={"49%"}/>
             <Button type="normal" color="#3CC687" title='Add Item' width={"49%"}/>
