@@ -20,7 +20,7 @@ export default function Index() {
 
   if (shouldRedirect) {
     if(isAuthenticated) {
-      return <Redirect href="/(tabs)/cart"/>
+      return <Redirect href="/(tabs)/catalogue"/>
     }
     return <Redirect href="/(onboarding)" />;
   }

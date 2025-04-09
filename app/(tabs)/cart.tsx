@@ -7,6 +7,7 @@ import SearchBox from '@/components/SearchBox'
 import CartContainer from '@/components/CartContainer'
 import AiBubble from '@/components/AiBubble'
 import data from '@/data.json'
+import SmallSearchBox from '@/components/SmallSearchBox'
 
 
 interface DataProps {
@@ -44,7 +45,7 @@ const cart = () => {
           <Text style={{color: "#fff", fontFamily: "Satoshi-Bold", fontSize: 17}}>Welcome to <Text style={{color: Colors.light.primary}}>Carts</Text></Text>
           <Text style={{color: "#fff", fontFamily: "Satoshi-Medium", fontSize: 8}}> Easily review and manage your items here. </Text>
         </View>
-        <SearchBox onChangeText={(value) => setSearchText(value)} value={searchText} onPress={() => console.log(searchText)}/>
+        <SmallSearchBox onChangeText={(value) => setSearchText(value)} value={searchText} onPress={() => console.log(searchText)}/>
       </View>
       <View>
         <FlatList

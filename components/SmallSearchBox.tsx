@@ -1,9 +1,9 @@
 import { View, TextInput, Image, Pressable } from 'react-native'
 
-const SearchBox = ({ onPress, value, onChangeText }:{onPress: () => void, onChangeText: (value: string) => void, value: string}) => {
+const SmallSearchBox = ({ onPress, value, onChangeText }:{onPress: () => void, onChangeText: (value: string) => void, value: string}) => {
   return (
-    <View style={{ backgroundColor: "rgba(255, 255, 255,0.2)", borderRadius: 8, height: 30, width: "50%", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-      <View style={{width: 130, height: 30, alignItems:"center", justifyContent: "center" }}>
+    <View style={{ backgroundColor: "rgba(255, 255, 255,0.2)", borderRadius: 8, height: 30, width: "40%", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+      <View style={{width: 100, paddingLeft: 20, height: 30, alignItems:"center", justifyContent: "center" }}>
         <TextInput value={value} placeholder='search...' onChangeText={onChangeText} style={{ width: 110, flex: 1, marginLeft: 10, color: "#fff"}}/>
       </View>
       <Pressable onPress={onPress} style={{width: 30, height: 30, alignItems:"center", justifyContent: "center" }}>
@@ -13,4 +13,4 @@ const SearchBox = ({ onPress, value, onChangeText }:{onPress: () => void, onChan
   )
 }
 
-export default SearchBox
+export default SmallSearchBox
