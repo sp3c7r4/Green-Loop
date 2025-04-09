@@ -24,9 +24,9 @@ const catalogue = () => {
   const [catalogueItems, setCatalogueItems] = useState<DataProps[]>([])
   const [searchText, setSearchText] = useState("")
   useEffect(() => {
-    setCatalogueItems((prev) => {
-      return [...prev, ...(data as DataProps[])]
-    })
+    // setCatalogueItems((prev) => {
+    //   return [...prev, ...(data as DataProps[])]
+    // })
   }, [])
   function onPressDelete(id: number): void {
     setCatalogueItems(prev => {
@@ -52,21 +52,24 @@ const catalogue = () => {
         <FlatList
           ListFooterComponent={<View style={{height: 50}}/>}
           ListHeaderComponent={<View style={{height: 10}}/>}
-          data={catalogueItems} // Assuming your data.json has a "products" array
+          data={catalogueItems}
           keyExtractor={(item) => item?.id.toString()}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             paddingBottom: 20,
           }}
           renderItem={({ item }) => (
-            <CartContainer data={item} onPressDelete={() => onPressDelete(item.id)} onPressRequest={() => onPressRequest(item.id)}/> // Pass the product data to ProductTile
+            <CartContainer data={item} onPressDelete={() => onPressDelete(item.id)} onPressRequest={() => onPressRequest(item.id)}/>
           )}
-        /> : <Button type='normal' title='Create Catalogue'/>
+        /> :
+        <View style={{marginVertical: 10}}>
+          <Button type='normal' title='Add Your First Item'/>
+        </View> 
         }
-        { catalogueItems.length === 0 && 
+        {/* { catalogueItems.length === 0 && 
         <View style={{ justifyContent: "center", alignItems: "center"}}>
           <Text style={{color: "#fff", fontSize: 15}}>🚫 No items in the cart</Text>
-        </View> }
+        </View> } */}
       </View>
       <StatusBar/>
     </SafeAreaView>
