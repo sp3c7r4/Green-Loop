@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet, TextInput } from 'react-native'
+import { View, Text, FlatList, StyleSheet, TextInput, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -34,7 +34,7 @@ const catalogue = () => {
         .map((_, index) => `index-${index}`),
     []
   );
-  const snapPoints = useMemo(() => ["50%", "70%"], []);
+  const snapPoints = useMemo(() => ["70%", "80%"], []);
 
   // callbacks
   const handleSheetChange = useCallback((index: number) => {
@@ -100,6 +100,7 @@ const catalogue = () => {
       <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
       <Button title="Close" onPress={() => handleClosePress()} /> */}
       <BottomSheet
+      enablePanDownToClose={true}
         ref={sheetRef}
         index={1}
         snapPoints={snapPoints}
@@ -108,11 +109,13 @@ const catalogue = () => {
         backgroundStyle={{backgroundColor: Colors.light.background}}
       >
         <BottomSheetScrollView contentContainerStyle={{ backgroundColor: Colors.light.background, paddingHorizontal: 16, flex: 1, paddingVertical: 20 }}>
-          <AddCatalogueItem/>
-          <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-            <Button type="outline" color="#f21160" title='close' onPress={closeBottomSheet} width={"49%"}/>
-            <Button type="normal" color="#3CC687" title='Add Item' width={"49%"}/>
-          </View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <AddCatalogueItem/>
+            <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 0}}>
+              <Button type="outline" color="#f21160" title='close' onPress={closeBottomSheet} width={"49%"}/>
+              <Button type="normal" color="#3CC687" title='Add Item' width={"49%"}/>
+            </View>
+          </ScrollView>
         </BottomSheetScrollView>
       </BottomSheet>
         <StatusBar/>
@@ -120,14 +123,5 @@ const catalogue = () => {
     </GestureHandlerRootView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    
-  },
-  itemContainer: {
-    
-  },
-});
 
 export default catalogue
