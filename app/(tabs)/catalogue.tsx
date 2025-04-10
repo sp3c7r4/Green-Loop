@@ -10,7 +10,7 @@ import data from '@/data.json'
 import SmallSearchBox from '@/components/SmallSearchBox'
 import Button from '@/components/Button'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetBackdrop, BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import AddCatalogueItem from '@/components/AddCatalogueItem';
 
 interface DataProps {
@@ -62,6 +62,17 @@ const catalogue = () => {
     });
   }, []);
   
+  const renderBackdrop = useCallback((props) => (
+    <BottomSheetBackdrop
+      {...props}
+      disappearsOnIndex={-1} // Backdrop disappears when the sheet is closed
+      appearsOnIndex={0} // Backdrop appears when the sheet is open
+      opacity={0.2} // Adjust the opacity of the backdrop
+      enableTouchThrough={false} // Prevent touches from passing through the backdrop
+      style={{ backgroundColor: "rgb(1,1,1)" }} // Set the overlay color
+    />
+  ), []);
+
   const onPressRequest = (id: number): void => {
     console.log(id)
   }
@@ -100,13 +111,14 @@ const catalogue = () => {
       <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
       <Button title="Close" onPress={() => handleClosePress()} /> */}
       <BottomSheet
-      enablePanDownToClose={true}
+        enablePanDownToClose={true}
         ref={sheetRef}
         index={1}
         snapPoints={snapPoints}
         enableDynamicSizing={false}
         onChange={handleSheetChange}
         backgroundStyle={{backgroundColor: Colors.light.background}}
+        backdropComponent={renderBackdrop}
       >
         <BottomSheetScrollView contentContainerStyle={{ backgroundColor: Colors.light.background, paddingHorizontal: 16, flex: 1, paddingVertical: 20 }}>
           <ScrollView showsVerticalScrollIndicator={false}>
