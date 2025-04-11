@@ -16,4 +16,7 @@ export const Colors = {
     text: "#FFFFFF", // White
     border: "#424242", // Dark Gray
   },
+  inputBox: {
+    background: "#2c2d30"
+  }
 };

@@ -16,7 +16,10 @@
         "foregroundImage": "./assets/icon/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.lacoco.Greenloop"
+      "package": "com.lacoco.Greenloop",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -25,6 +28,13 @@
     },
     "plugins": [
       "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your photos"
+        }
+      ],
       [
         "expo-splash-screen",
         {
@@ -43,7 +53,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "b718de03-9b5c-461a-b950-f33d2bdf7262"
+        "projectId": "b124ad40-4dd2-4c32-850d-6ca2b11b2554"
       }
     }
   }

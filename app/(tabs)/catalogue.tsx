@@ -26,23 +26,15 @@ interface DataProps {
 const catalogue = () => {
   const sheetRef = useRef<BottomSheet>(null);
 
-  // variables
-  const data = useMemo(
-    () =>
-      Array(50)
-        .fill(0)
-        .map((_, index) => `index-${index}`),
-    []
-  );
-  const snapPoints = useMemo(() => ["70%", "80%"], []);
+  const snapPoints = useMemo(() => ["20%", "80%"], []);
 
   // callbacks
   const handleSheetChange = useCallback((index: number) => {
     console.log("handleSheetChange", index);
   }, []);
-  const openBottomSheet = () => {
-    sheetRef.current?.snapToIndex(0);
-  }
+  const openBottomSheet = useCallback((index) => {
+    sheetRef.current?.snapToIndex(index);
+  }, [])
   const closeBottomSheet = useCallback(() => {
     sheetRef.current?.close();
   }, [])
@@ -102,7 +94,7 @@ const catalogue = () => {
             )}
           /> :
           <View style={{marginVertical: 15}}>
-            <Button type='normal' title='Add Your First Item' onPress={openBottomSheet}/>
+            <Button type='normal' title='Add Your First Item' onPress={() => openBottomSheet(1)}/>
           </View> 
           }
         </View>
@@ -113,18 +105,24 @@ const catalogue = () => {
       <BottomSheet
         enablePanDownToClose={true}
         ref={sheetRef}
-        index={1}
+        index={-1} // Set the initial index to -1 to prevent it from popping up automatically
         snapPoints={snapPoints}
         enableDynamicSizing={false}
         onChange={handleSheetChange}
-        backgroundStyle={{backgroundColor: Colors.light.background}}
+        backgroundStyle={{backgroundColor: "#212226"}}
+        handleIndicatorStyle={{
+          backgroundColor: "#fff", 
+          width: 40, 
+          height: 4, 
+          borderRadius: 2,
+        }}
         backdropComponent={renderBackdrop}
       >
-        <BottomSheetScrollView contentContainerStyle={{ backgroundColor: Colors.light.background, paddingHorizontal: 16, flex: 1, paddingVertical: 20 }}>
+        <BottomSheetScrollView contentContainerStyle={{ backgroundColor: "#212226", paddingHorizontal: 16, flex: 1, paddingVertical: 20 }}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <AddCatalogueItem/>
             <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 0}}>
-              <Button type="outline" color="#f21160" title='close' onPress={closeBottomSheet} width={"49%"}/>
+              <Button type="normal" color="#f21160" title='close' onPress={closeBottomSheet} width={"49%"}/>
               <Button type="normal" color="#3CC687" title='Add Item' width={"49%"}/>
             </View>
           </ScrollView>

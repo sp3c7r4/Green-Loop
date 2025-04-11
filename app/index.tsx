@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Image, View } from "react-native";
 import useAuthStore from "@/auth/authStore";
 import { StatusBar } from "expo-status-bar";
+import * as ImagePicker from 'expo-image-picker';
 
 export default function Index() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
@@ -14,13 +15,19 @@ export default function Index() {
     loginAuthState()
     const timer = setTimeout( async () => {
       setShouldRedirect(true);
-    }, 200);
+    }, 3000);
+    (async () => {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Sorry, we need media library permissions to make this work!');
+      }
+    })();
     return () => clearTimeout(timer);
   }, []);
 
   if (shouldRedirect) {
     if(isAuthenticated) {
-      return <Redirect href="/(tabs)/catalogue"/>
+      return <Redirect href="/(tabs)/home"/>
     }
     return <Redirect href="/(onboarding)" />;
   }
