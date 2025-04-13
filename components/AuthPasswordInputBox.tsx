@@ -1,13 +1,21 @@
-import { View, Text, TextInput, Pressable } from 'react-native';
-import React, { useState } from 'react';
-import FontSize from '@/constants/FontSize';
-import { Colors } from '@/constants/color';
+import { View, Text, TextInput, Pressable } from "react-native";
+import React, { useState } from "react";
+import FontSize from "@/constants/FontSize";
+import { color } from "@/constants/color";
 
 function Hider({ onPress, state }: { onPress: () => void; state: boolean }) {
   return (
-    <Pressable onPress={onPress} style={{ marginRight: 10, height: 30, alignItems: "center", justifyContent: "center" }}>
-      <Text style={{ fontFamily: 'Satoshi-Medium', opacity: 0.2 }}>
-        {state ? 'Hide' : 'Show'}
+    <Pressable
+      onPress={onPress}
+      style={{
+        marginRight: 10,
+        height: 30,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Text style={{ fontFamily: "Satoshi-Medium", opacity: 0.2 }}>
+        {state ? "Hide" : "Show"}
       </Text>
     </Pressable>
   );
@@ -32,7 +40,7 @@ const AuthPasswordInputBoxes = ({
         <Text
           style={{
             fontSize: FontSize.textbox_label_fbold,
-            fontFamily: 'Satoshi-Bold',
+            fontFamily: "Satoshi-Bold",
             marginVertical: 3,
           }}
         >
@@ -41,12 +49,12 @@ const AuthPasswordInputBoxes = ({
         <View
           style={{
             height: 55,
-            backgroundColor: Colors.light.overlay,
+            backgroundColor: "#fff",
             borderRadius: 10,
-            alignItems: 'center',
+            alignItems: "center",
             paddingHorizontal: 10,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
         >
           <TextInput
@@ -54,7 +62,7 @@ const AuthPasswordInputBoxes = ({
             onChangeText={onChangeText}
             placeholder={placeholder}
             value={value}
-            style={{ height: 40, fontFamily: 'Satoshi-Medium', flex: 1 }}
+            style={{ height: 40, fontFamily: "Satoshi-Medium", flex: 1 }}
           />
           <Hider onPress={() => setVisible(!visible)} state={visible} />
         </View>

@@ -1,4 +1,4 @@
-import { Colors } from "@/constants/color";
+import { color } from "@/constants/color";
 import { Redirect } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, View } from "react-native";
@@ -39,7 +39,7 @@ export default function Index() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: Colors.light.background
+        backgroundColor: color.light.background
       }}
     >
       <Image source={require('@/assets/images/greenloop_black_1.png')} resizeMode="contain" style={{width: 250, height: 50}}/>

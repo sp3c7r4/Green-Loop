@@ -1,5 +1,6 @@
 import { View, Text, Image, ScrollView } from 'react-native'
 import React from 'react'
+import { color } from '@/constants/color'
 
 interface DataProps {
   id: number
@@ -14,7 +15,7 @@ const image = "https://plus.unsplash.com/premium_photo-1689539137236-b68e436248d
 
 const ProductTile = ({data}:{data: DataProps}) => {
   return (
-    <View style={{width: "48%", padding: 10, height: 170, backgroundColor: "rgba(21, 232, 119,0.2)", borderRadius: 5, marginTop: 10, borderWidth: 1, borderColor: "rgba(21, 232, 119,0.5)"}}>
+    <View style={{width: "48%", padding: 10, height: 170, backgroundColor: color.light.primary, borderRadius: 5, marginTop: 10, borderWidth: 1, borderColor: "rgba(21, 232, 119,0.5)"}}>
       <Text style={{color: "#fff", fontFamily: "Satoshi-Bold", fontSize: 10}}>{data.name}</Text>
       <Text style={{color: "#fff", fontFamily: "Satoshi-Medium", fontSize: 8, opacity: 0.5}}>{data.date +" "+ data.time}</Text>
       <View style={{marginTop: 6, flexDirection: "row", justifyContent: "space-between"}}>

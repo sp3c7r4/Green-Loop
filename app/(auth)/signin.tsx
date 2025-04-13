@@ -1,7 +1,7 @@
 import { View, Text, Modal, Alert } from "react-native";
 import React, { useEffect } from "react";
 import Header from "@/components/Header";
-import { Colors } from "@/constants/color";
+import { color } from "@/constants/color";
 import FontSize from "@/constants/FontSize";
 import AuthInputBoxes from "@/components/AuthInputBox";
 import { useState } from "react";
@@ -16,69 +16,74 @@ const dummyData = {
     firstname: "spectra",
     lastname: "Gee",
     email: "sarafasatar@gmail.com",
-    password: "000000"
-  }
-}
+    password: "000000",
+  },
+};
 
 interface ResponseType {
   data: {
-    email: string,
-    password: string,
-    firstname: string,
-    lastname: string
-  },
-  success: boolean
+    email: string;
+    password: string;
+    firstname: string;
+    lastname: string;
+  };
+  success: boolean;
 }
 
 const signin = () => {
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
   const { login } = useAuthStore();
-  const [loading, setLoading] = useState(false)
-    async function handlePress() {
-      setLoading(true); // Set loading to true at the start
-    
-      try {
-        const response: ResponseType = await new Promise((resolve, reject) => {
-          setTimeout(() => {
-            const getEmail = dummyData.data.email === formData.email;
-            if (!getEmail) {
-              reject({ success: false, data: "Invalid mail" });
-            }
-            const getPassword = dummyData.data.password === formData.password;
-            if (!getPassword) {
-              reject({ success: false, data: "Invalid Password" });
-            }
-            resolve({ success: true, data: dummyData.data });
-          }, 3000);
-        });
-    
-        console.log("Response received:", response);
-        login(
-          response.data.email,
-          response.data.firstname,
-          response.data.lastname
-        ); // Update Zustand store with user data
-        Alert.alert("Success", "You are now logged in!");
-        router.replace("/(tabs)/home");
-      } catch (error: any) {
-        console.error("Error occurred:", error);
-        Alert.alert("Error", error.data || "An error occurred");
-      } finally {
-        setLoading(false); // Ensure loading is set to false in all cases
-        console.log("Loading state set to false");
-      }
+  const [loading, setLoading] = useState(false);
+  async function handlePress() {
+    setLoading(true); // Set loading to true at the start
+
+    try {
+      const response: ResponseType = await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const getEmail = dummyData.data.email === formData.email;
+          if (!getEmail) {
+            reject({ success: false, data: "Invalid mail" });
+          }
+          const getPassword = dummyData.data.password === formData.password;
+          if (!getPassword) {
+            reject({ success: false, data: "Invalid Password" });
+          }
+          resolve({ success: true, data: dummyData.data });
+        }, 3000);
+      });
+
+      console.log("Response received:", response);
+      login(
+        response.data.email,
+        response.data.firstname,
+        response.data.lastname
+      ); // Update Zustand store with user data
+      Alert.alert("Success", "You are now logged in!");
+      router.replace("/(tabs)/home");
+    } catch (error: any) {
+      console.error("Error occurred:", error);
+      Alert.alert("Error", error.data || "An error occurred");
+    } finally {
+      setLoading(false); // Ensure loading is set to false in all cases
+      console.log("Loading state set to false");
     }
+  }
   return (
     <View
       style={{
-        backgroundColor: Colors.light.background,
+        backgroundColor: color.greensync.background,
         paddingHorizontal: 16,
+        flex: 1,
       }}
     >
-      <Header onPress={() => {router.navigate('/(onboarding)')}}/>
+      <Header
+        onPress={() => {
+          router.navigate("/(onboarding)");
+        }}
+      />
       <View>
         <Text
           style={{
@@ -97,7 +102,7 @@ const signin = () => {
         >
           Enter your details in order to sign-in
         </Text>
-        <View style={{marginTop: 20}}>
+        <View style={{ marginTop: 20 }}>
           <AuthInputBoxes
             value={formData.email}
             label="Email"
@@ -115,27 +120,32 @@ const signin = () => {
             }
           />
         </View>
-        <View style={{marginVertical: 10}}>
-          <Button onPress={handlePress} type="normal" color="#111111" buttonTextColor="#fff" title="Sign in"/>
+        <View style={{ marginVertical: 10 }}>
+          <Button
+            onPress={handlePress}
+            type="normal"
+            color="#111111"
+            buttonTextColor="#fff"
+            title="Sign in"
+          />
         </View>
       </View>
-        <Modal
-          transparent={true}
-          visible={loading}
-          animationType="fade"
+      <Modal transparent={true} visible={loading} animationType="fade">
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Text style={{ color: '#fff', fontSize: 18 }}>Loading...</Text>
-          </View>
-        </Modal>
-      <StatusBar style="dark" backgroundColor={loading ? 'rgba(0, 0, 0, 0.5)' : "transparent"}/>
+          <Text style={{ color: "#fff", fontSize: 18 }}>Loading...</Text>
+        </View>
+      </Modal>
+      <StatusBar
+        style="dark"
+        backgroundColor={loading ? "rgba(0, 0, 0, 0.5)" : "transparent"}
+      />
     </View>
   );
 };

@@ -1,10 +1,10 @@
 // Color constants for light and dark mode
 
-export const Colors = {
+export const color = {
   light: {
     primary: "#3CC687", // Green
     secondary: "#50D699", // Light Green
-    background: "#F0F1F3", // White
+    background: "#edfae6", // White
     overlay: "#F9F9F9",
     text: "#212121", // Dark Gray
     border: "#E0E0E0", // Light Gray
@@ -32,6 +32,7 @@ export const Colors = {
     dark_blue: "#1e293b",
     dark: "#1a1f1a",
     test: "rgb(237, 255, 247)",
-    test2: "rgb(237, 250, 230)"
+    test2: "rgb(237, 250, 230)",
+    background: "#edfae6"
   }
 };
