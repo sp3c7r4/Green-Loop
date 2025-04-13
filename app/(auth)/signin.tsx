@@ -10,7 +10,6 @@ import { router } from "expo-router";
 import Button from "@/components/Button";
 import { StatusBar } from "expo-status-bar";
 import useAuthStore from "@/auth/authStore";
-import TestAuthStore from "@/auth/test";
 
 const dummyData = {
   data: {
@@ -136,9 +135,6 @@ const signin = () => {
             <Text style={{ color: '#fff', fontSize: 18 }}>Loading...</Text>
           </View>
         </Modal>
-        { loading ? 
-        <TestAuthStore/>
-        : ""}
       <StatusBar style="dark" backgroundColor={loading ? 'rgba(0, 0, 0, 0.5)' : "transparent"}/>
     </View>
   );

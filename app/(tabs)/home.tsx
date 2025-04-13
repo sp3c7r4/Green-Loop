@@ -1,13 +1,12 @@
 import { View, Text, Image, FlatList, Pressable } from 'react-native'
 import React, { useState } from 'react'
-import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Colors } from '@/constants/color'
-import HomeHeader from '@/components/HomeHeader'
-import FontSize from '@/constants/FontSize'
 import ProductTile from '@/components/ProductTile'
 import data from '@/data.json'
 import SearchBox from '@/components/SearchBox'
+import useAuthStore from '@/auth/authStore'
+import { router } from 'expo-router'
 // import {FlashList} from '@shopify/flash-list'
 const headerTiles = [
   { "id": "trade", "image": require("@/assets/images/trade.png") },
@@ -19,7 +18,12 @@ const headerTiles = [
 
 
 const home = () => {
+  const {logout} = useAuthStore()
   const[searchText, setSearchText] = useState("")
+  function handleLogout() {
+    logout();
+    router.replace('/(onboarding)')
+  }
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: "#111"}}>
       <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginHorizontal: 16, marginTop: 10}}>
@@ -27,7 +31,7 @@ const home = () => {
           <Text style={{color: "#fff", fontFamily: "Satoshi-Bold", fontSize: 19}}>Hello <Text style={{color: Colors.light.primary}}>Satar</Text></Text>
           <Text style={{color: "#fff", fontFamily: "Satoshi-Medium", fontSize: 10}}>{"Welcome to Greenloop"}</Text>
         </View>
-        <SearchBox value={searchText} onPress={() => console.log(searchText)} onChangeText={(value)=>setSearchText(value)}/>
+        <SearchBox value={searchText} onPress={() => handleLogout()} onChangeText={(value)=>setSearchText(value)}/>
       </View>
       <View style={{ height: 120, backgroundColor: "#111"}}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>

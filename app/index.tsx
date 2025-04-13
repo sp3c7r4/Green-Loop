@@ -15,7 +15,7 @@ export default function Index() {
     loginAuthState()
     const timer = setTimeout( async () => {
       setShouldRedirect(true);
-    }, 3000);
+    }, 1000);
     (async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
@@ -38,10 +38,10 @@ export default function Index() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: Colors.dark.background
+        backgroundColor: Colors.light.background
       }}
     >
-      <Image source={require('@/assets/images/logo_text.png')} resizeMode="contain" style={{width: 250, height: 50}}/>
+      <Image source={require('@/assets/images/greenloop_black_1.png')} resizeMode="contain" style={{width: 250, height: 50}}/>
       <StatusBar style="auto"/>
     </View>
   );

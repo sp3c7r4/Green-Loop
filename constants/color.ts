@@ -24,12 +24,14 @@ export const Colors = {
     white: "#ffffff",
     grey: "#eeeeee"
   },
-  greenloop: {
+  greensync: {
     light_green: "#edfae6",
     light_green2: "#e9f9e0",
     primary: "#5eb237",
     primary2: "#008300",
     dark_blue: "#1e293b",
-    dark: "#1a1f1a"
+    dark: "#1a1f1a",
+    test: "rgb(237, 255, 247)",
+    test2: "rgb(237, 250, 230)"
   }
 };
