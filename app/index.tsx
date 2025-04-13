@@ -6,6 +6,7 @@ import useAuthStore from "@/auth/authStore";
 import { StatusBar } from "expo-status-bar";
 import * as ImagePicker from 'expo-image-picker';
 
+
 export default function Index() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const isAuthenticated = useAuthStore(state => state.isAuthenticated)
@@ -15,7 +16,7 @@ export default function Index() {
     loginAuthState()
     const timer = setTimeout( async () => {
       setShouldRedirect(true);
-    }, 1000);
+    }, 200);
     (async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
