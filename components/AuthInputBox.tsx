@@ -6,13 +6,17 @@ import { color } from "@/constants/color";
 const AuthInputBox = ({
   label,
   onChangeText,
+  onBlur,
   placeholder,
   value,
+  disabled=false
 }: {
   value: string;
   label: string;
   onChangeText: (value: string) => void;
+  onBlur: () => void;
   placeholder: string;
+  disabled?: boolean
 }) => {
   return (
     <View style={{ flexGrow: 1 }}>
@@ -36,11 +40,14 @@ const AuthInputBox = ({
           }}
         >
           <TextInput
+            onBlur={onBlur}
+            editable={!disabled}
             onChangeText={onChangeText}
-            value={value}
+            value={disabled ? value.charAt(0).toUpperCase() + value.slice(1).toLowerCase() : value}
             placeholder={placeholder}
             style={{
               height: 40,
+              color: disabled ? color.greensync.primary : "transparent",
               fontFamily: "Satoshi-Medium",
               borderBottomWidth: 0,
             }}

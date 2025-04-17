@@ -1,4 +1,4 @@
-import { View, Text, Modal, Alert, FlatList, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { View, Text, Modal, Alert, FlatList, KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import Header from "@/components/Header";
 import { color } from "@/constants/color";
@@ -6,6 +6,7 @@ import FontSize from "@/constants/FontSize";
 import AuthInputBoxes from "@/components/AuthInputBox";
 import { useState } from "react";
 import AuthPasswordInputBoxes from "@/components/AuthPasswordInputBox";
+import { useForm, Controller } from 'react-hook-form';
 import { router } from "expo-router";
 import Button from "@/components/Button";
 import { StatusBar } from "expo-status-bar";
@@ -13,25 +14,6 @@ import useAuthStore from "@/auth/authStore";
 import axios from 'axios'
 import env from "@/constants/env";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
-const dummyData = {
-  data: {
-    firstname: "spectra",
-    lastname: "Gee",
-    email: "sarafasatar@gmail.com",
-    password: "000000",
-  },
-};
-
-interface ResponseType {
-  data: {
-    email: string;
-    password: string;
-    firstname: string;
-    lastname: string;
-  };
-  success: boolean;
-}
 
 const registerData = [
   { key: "firstname", label: "Firstname", placeholder: "E.g John" },
@@ -45,30 +27,63 @@ const registerData = [
   { key: "lga", label: "Local government area", placeholder: "E.g Ikeja" }
 ];
 
-function ConsentScreen() {
+function ConsentScreen({setRole}:{setRole: () => void}) {
   return (
     <View style={{flex:1,justifyContent: "center", alignItems: "center", backgroundColor: color.greensync.light_green}}>
-      <View style={{borderWidth: 2, backgroundColor: "rgba()"}}>
-
+      <Text style={{fontFamily: "Satoshi-Bold", fontWeight: "black", fontSize: 25, marginVertical: 10}}>Choose your role?</Text>
+      <View style={{flexDirection: "row", justifyContent: "space-between",gap: 30, alignItems: "center"}}>
+        <TouchableOpacity onPress={() => setRole("engineer")} style={{borderWidth: 2, width: "30%", borderRadius: 10, height: 100, justifyContent: "center", alignItems: "center", borderColor: "rgba(21, 232, 119, 0.5)", backgroundColor: "rgba(21, 232, 119, 0.2)"}}>
+          <Text>Engineer</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setRole("recycler")} style={{borderWidth: 2, width: "30%", borderRadius: 10, height: 100, justifyContent: "center", alignItems: "center", borderColor: "rgba(21, 232, 119, 0.5)", backgroundColor: "rgba(21, 232, 119, 0.2)"}}>
+          <Text>Recycler/Consumer</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
 } 
 
 const signin = () => {
+  const [userType, setUserType] = useState("")
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
     email: "",
     mobile: "",
-    type: "",
+    type: userType,
     password: "",
     address: "",
     state: "",
     lga: "",
   });
+
+  useEffect(() => {
+    if (userType) {
+      setValue("type", userType);
+    }
+  }, [userType]);
+  
   const { login } = useAuthStore();
   const [loading, setLoading] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      mobile: "",
+      type: "",
+      password: "",
+      address: "",
+      state: "",
+      lga: "",
+    },
+  });
 
   async function handlePress() {
     setLoading(true);
@@ -87,7 +102,8 @@ const signin = () => {
     }
   }
 
-  return (
+  { return userType ? 
+   (
     <View
       style={{
         backgroundColor: color.light.background,
@@ -114,13 +130,22 @@ const signin = () => {
             fontSize: FontSize.paragraph_fmedium,
             fontFamily: "Satoshi-Medium",
             opacity: 0.2,
+            marginBottom: 20
           }}
         >
           Enter your details to create a new account
         </Text>
-        <KeyboardAwareScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+        <KeyboardAwareScrollView showsVerticalScrollIndicator={false} style={{ flex: 1}}>
             { registerData.map(item => (
-              <AuthInputBoxes
+          <Controller
+          key={item.key}
+            control={control}
+            name="email"
+        defaultValue=""
+        render={({ field: { onChange, onBlur, value } }) => (
+          <AuthInputBoxes
+          onBlur={onBlur}
+              disabled={ item.key === 'type' }
               value={formData[item.key]}
                   label={item.label}
                   placeholder={item.placeholder}
@@ -128,8 +153,20 @@ const signin = () => {
                     setFormData((prev) => ({ ...prev, [item.key]: value }))
                   }
                 />
+        )}
+          />
+              // <AuthInputBoxes
+              // key={item.key}
+              // disabled={ item.key === 'type' }
+              // value={formData[item.key]}
+              //     label={item.label}
+              //     placeholder={item.placeholder}
+              //     onChangeText={(value) =>
+              //       setFormData((prev) => ({ ...prev, [item.key]: value }))
+              //     }
+              //   />
             ))}
-          <View style={{ marginVertical: 10 }}>
+          <View style={{ marginVertical: 10, marginBottom: 100 }}>
             <Button
               onPress={handlePress}
               type="normal"
@@ -158,7 +195,7 @@ const signin = () => {
         backgroundColor={loading ? "rgba(0, 0, 0, 0.5)" : "transparent"}
       />
     </View>
-  );
+  ) : <ConsentScreen setRole={setUserType}/> }
 };
 
 // export default signin;
