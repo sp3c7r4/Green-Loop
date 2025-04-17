@@ -10,6 +10,8 @@ import { router } from "expo-router";
 import Button from "@/components/Button";
 import { StatusBar } from "expo-status-bar";
 import useAuthStore from "@/auth/authStore";
+import axios from 'axios'
+import env from "@/constants/env";
 
 const dummyData = {
   data: {
@@ -30,6 +32,8 @@ interface ResponseType {
   success: boolean;
 }
 
+
+
 const signin = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -41,30 +45,22 @@ const signin = () => {
     setLoading(true); // Set loading to true at the start
 
     try {
-      const response: ResponseType = await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          const getEmail = dummyData.data.email === formData.email;
-          if (!getEmail) {
-            reject({ success: false, data: "Invalid mail" });
-          }
-          const getPassword = dummyData.data.password === formData.password;
-          if (!getPassword) {
-            reject({ success: false, data: "Invalid Password" });
-          }
-          resolve({ success: true, data: dummyData.data });
-        }, 3000);
-      });
+      const response: ResponseType = await axios.post(`${env.base_url}/user/login`, {
+        email:"sarafasatar@gmail.com",
+        password:"0000001"
+     });
+      console.log(response.data)
 
       console.log("Response received:", response);
-      login(
-        response.data.email,
-        response.data.firstname,
-        response.data.lastname
-      ); // Update Zustand store with user data
+      // login(
+      //   response.data.email,
+      //   response.data.firstname,
+      //   response.data.lastname
+      // ); // Update Zustand store with user data
       Alert.alert("Success", "You are now logged in!");
-      router.replace("/(tabs)/home");
+      // router.replace("/(tabs)/home");
     } catch (error: any) {
-      console.error("Error occurred:", error);
+      console.error("Error occurred:", JSON.stringify(error));
       Alert.alert("Error", error.data || "An error occurred");
     } finally {
       setLoading(false); // Ensure loading is set to false in all cases

@@ -16,7 +16,7 @@ export default function Index() {
     loginAuthState()
     const timer = setTimeout( async () => {
       setShouldRedirect(true);
-    }, 3000);
+    }, 2);
     (async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
@@ -30,7 +30,7 @@ export default function Index() {
     if(isAuthenticated) {
       return <Redirect href="/(tabs)/home"/>
     }
-    return <Redirect href="/(onboarding)" />;
+    return <Redirect href="/(auth)/signup" />;
   }
 
   return (
