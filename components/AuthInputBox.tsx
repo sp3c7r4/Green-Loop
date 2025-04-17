@@ -24,7 +24,7 @@ const AuthInputBox = ({
             marginVertical: 3,
           }}
         >
-          {label}
+            {label.charAt(0).toUpperCase() + label.slice(1).toLowerCase()}
         </Text>
         <View
           style={{

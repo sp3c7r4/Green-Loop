@@ -1,4 +1,4 @@
-import { View, Text, Modal, Alert } from "react-native";
+import { View, Text, Modal, Alert, FlatList, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import React, { useEffect } from "react";
 import Header from "@/components/Header";
 import { color } from "@/constants/color";
@@ -12,6 +12,7 @@ import { StatusBar } from "expo-status-bar";
 import useAuthStore from "@/auth/authStore";
 import axios from 'axios'
 import env from "@/constants/env";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const dummyData = {
   data: {
@@ -32,46 +33,66 @@ interface ResponseType {
   success: boolean;
 }
 
+const registerData = [
+  { key: "firstname", label: "Firstname", placeholder: "E.g John" },
+  { key: "lastname", label: "Lastname", placeholder: "E.g Doe" },
+  { key: "email", label: "Email", placeholder: "E.g john@greenloop.com" },
+  { key: "mobile", label: "Mobile", placeholder: "E.g 08165918482" },
+  { key: "type", label: "Customer Type", placeholder: "E.g Regular" },
+  { key: "password", label: "Password", placeholder: "Enter your password" },
+  { key: "address", label: "Address", placeholder: "E.g 123 Main St" },
+  { key: "state", label: "State", placeholder: "E.g Lagos" },
+  { key: "lga", label: "Local government area", placeholder: "E.g Ikeja" }
+];
 
+function ConsentScreen() {
+  return (
+    <View style={{flex:1,justifyContent: "center", alignItems: "center", backgroundColor: color.greensync.light_green}}>
+      <View style={{borderWidth: 2, backgroundColor: "rgba()"}}>
+
+      </View>
+    </View>
+  )
+} 
 
 const signin = () => {
   const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
     email: "",
+    mobile: "",
+    type: "",
     password: "",
+    address: "",
+    state: "",
+    lga: "",
   });
   const { login } = useAuthStore();
   const [loading, setLoading] = useState(false);
+
   async function handlePress() {
-    setLoading(true); // Set loading to true at the start
+    setLoading(true);
 
     try {
-      const response: ResponseType = await axios.post(`${env.base_url}/user/login`, {
-        email:"sarafasatar@gmail.com",
-        password:"0000001"
-     });
-      console.log(response.data)
+      const response: ResponseType = await axios.post(`${env.base_url}/user/register`, formData);
+      console.log("Response received:", response.data);
 
-      console.log("Response received:", response);
-      // login(
-      //   response.data.email,
-      //   response.data.firstname,
-      //   response.data.lastname
-      // ); // Update Zustand store with user data
-      Alert.alert("Success", "You are now logged in!");
-      // router.replace("/(tabs)/home");
+      Alert.alert("Success", "Account created successfully!");
+      router.replace("/(tabs)/home");
     } catch (error: any) {
       console.error("Error occurred:", JSON.stringify(error));
-      Alert.alert("Error", error.data || "An error occurred");
+      Alert.alert("Error", error.message || "An error occurred");
     } finally {
-      setLoading(false); // Ensure loading is set to false in all cases
-      console.log("Loading state set to false");
+      setLoading(false);
     }
   }
+
   return (
     <View
       style={{
         backgroundColor: color.light.background,
         paddingHorizontal: 16,
+        flex: 1,
       }}
     >
       <Header
@@ -79,14 +100,14 @@ const signin = () => {
           router.navigate("/(onboarding)");
         }}
       />
-      <View>
+      <View style={{flex: 1}}>
         <Text
           style={{
             fontSize: FontSize.heading_two_fblack,
             fontFamily: "Satoshi-Bold",
           }}
         >
-          Let's sign you in
+          Get Started
         </Text>
         <Text
           style={{
@@ -95,35 +116,30 @@ const signin = () => {
             opacity: 0.2,
           }}
         >
-          Enter your details in order to sign-in
+          Enter your details to create a new account
         </Text>
-        <View style={{ marginTop: 20 }}>
-          <AuthInputBoxes
-            value={formData.email}
-            label="Email"
-            placeholder="john@greenloop.com"
-            onChangeText={(value) =>
-              setFormData((prev) => ({ ...prev, email: value }))
-            }
-          />
-          <AuthPasswordInputBoxes
-            value={formData.password}
-            label="Password"
-            placeholder="john@doe.com"
-            onChangeText={(value) =>
-              setFormData((prev) => ({ ...prev, password: value }))
-            }
-          />
-        </View>
-        <View style={{ marginVertical: 10 }}>
-          <Button
-            onPress={handlePress}
-            type="normal"
-            color="#111111"
-            buttonTextColor="#fff"
-            title="Sign in"
-          />
-        </View>
+        <KeyboardAwareScrollView showsVerticalScrollIndicator={false} style={{flex: 1}}>
+            { registerData.map(item => (
+              <AuthInputBoxes
+              value={formData[item.key]}
+                  label={item.label}
+                  placeholder={item.placeholder}
+                  onChangeText={(value) =>
+                    setFormData((prev) => ({ ...prev, [item.key]: value }))
+                  }
+                />
+            ))}
+          <View style={{ marginVertical: 10 }}>
+            <Button
+              onPress={handlePress}
+              type="normal"
+              color="#111111"
+              buttonTextColor="#fff"
+              title={loading ? "Loading..." : "Sign Up"}
+            />
+          </View>
+        </KeyboardAwareScrollView>
+
       </View>
       <Modal transparent={true} visible={loading} animationType="fade">
         <View
@@ -144,5 +160,7 @@ const signin = () => {
     </View>
   );
 };
+
+// export default signin;
 
 export default signin;
