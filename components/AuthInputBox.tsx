@@ -9,27 +9,32 @@ const AuthInputBox = ({
   onBlur,
   placeholder,
   value,
-  disabled=false
+  disabled=false,
+  error
 }: {
   value: string;
   label: string;
   onChangeText: (value: string) => void;
   onBlur: () => void;
   placeholder: string;
-  disabled?: boolean
+  disabled?: boolean;
+  error: string
 }) => {
   return (
     <View style={{ flexGrow: 1 }}>
       <View>
-        <Text
-          style={{
-            fontSize: FontSize.textbox_label_fbold,
-            fontFamily: "Satoshi-Bold",
-            marginVertical: 3,
-          }}
-        >
-            {label.charAt(0).toUpperCase() + label.slice(1).toLowerCase()}
-        </Text>
+        <View style={{flexDirection: "row", alignItems: "baseline", gap: 5}}>
+          <Text
+            style={{
+              fontSize: FontSize.textbox_label_fbold,
+              fontFamily: "Satoshi-Bold",
+              marginVertical: 3,
+            }}
+          >
+              {label.charAt(0).toUpperCase() + label.slice(1).toLowerCase()}
+          </Text>
+          <Text style={{fontSize: 10, color: "red"}}>{error}</Text>
+        </View>
         <View
           style={{
             height: 55,
@@ -47,7 +52,7 @@ const AuthInputBox = ({
             placeholder={placeholder}
             style={{
               height: 40,
-              color: disabled ? color.greensync.primary : "transparent",
+              color: disabled ? color.greensync.primary : "black",
               fontFamily: "Satoshi-Medium",
               borderBottomWidth: 0,
             }}

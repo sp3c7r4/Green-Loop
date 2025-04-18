@@ -10,6 +10,9 @@ import { router } from "expo-router";
 import Button from "@/components/Button";
 import { StatusBar } from "expo-status-bar";
 import useAuthStore from "@/auth/authStore";
+import { SafeAreaView } from "react-native-safe-area-context";
+import axios from "axios";
+import env from "@/constants/env";
 
 const dummyData = {
   data: {
@@ -41,28 +44,20 @@ const signin = () => {
     setLoading(true); // Set loading to true at the start
 
     try {
-      const response: ResponseType = await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          const getEmail = dummyData.data.email === formData.email;
-          if (!getEmail) {
-            reject({ success: false, data: "Invalid mail" });
-          }
-          const getPassword = dummyData.data.password === formData.password;
-          if (!getPassword) {
-            reject({ success: false, data: "Invalid Password" });
-          }
-          resolve({ success: true, data: dummyData.data });
-        }, 3000);
-      });
+      const response: ResponseType = await axios.post(`${env.base_url}/user/login`, formData);
 
-      console.log("Response received:", response);
+      const {user, token} = response.data.data;
       login(
-        response.data.email,
-        response.data.firstname,
-        response.data.lastname
+        user.id,
+        user.firstname,
+        user.lastname,
+        user.email,
+        user.mobile,
+        user.type,
+        token,
       ); // Update Zustand store with user data
       Alert.alert("Success", "You are now logged in!");
-      router.replace("/(tabs)/home");
+      // router.replace("/(tabs)/home");
     } catch (error: any) {
       console.error("Error occurred:", error);
       Alert.alert("Error", error.data || "An error occurred");
@@ -72,7 +67,7 @@ const signin = () => {
     }
   }
   return (
-    <View
+    <SafeAreaView
       style={{
         backgroundColor: color.greensync.background,
         paddingHorizontal: 16,
@@ -146,7 +141,7 @@ const signin = () => {
         style="dark"
         backgroundColor={loading ? "rgba(0, 0, 0, 0.5)" : "transparent"}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

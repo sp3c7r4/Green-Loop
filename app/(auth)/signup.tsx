@@ -14,6 +14,7 @@ import useAuthStore from "@/auth/authStore";
 import axios from 'axios'
 import env from "@/constants/env";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const registerData = [
   { key: "firstname", label: "Firstname", placeholder: "E.g John" },
@@ -24,7 +25,8 @@ const registerData = [
   { key: "password", label: "Password", placeholder: "Enter your password" },
   { key: "address", label: "Address", placeholder: "E.g 123 Main St" },
   { key: "state", label: "State", placeholder: "E.g Lagos" },
-  { key: "lga", label: "Local government area", placeholder: "E.g Ikeja" }
+  { key: "lga", label: "Local government area", placeholder: "E.g Ikeja" },
+  { key: "country", label: "Country", placeholder: "E.g Nigeria" },
 ];
 
 function ConsentScreen({setRole}:{setRole: () => void}) {
@@ -57,11 +59,6 @@ const signin = () => {
     lga: "",
   });
 
-  useEffect(() => {
-    if (userType) {
-      setValue("type", userType);
-    }
-  }, [userType]);
   
   const { login } = useAuthStore();
   const [loading, setLoading] = useState(false);
@@ -82,29 +79,43 @@ const signin = () => {
       address: "",
       state: "",
       lga: "",
+      country: "",
     },
   });
+  useEffect(() => {
+    if (userType) {
+      setValue("type", userType);
+    }
+    console.log(errors)
+  }, [userType, errors]);
 
-  async function handlePress() {
-    setLoading(true);
+  async function onSubmit(data) {
+    // setLoading(true);
 
     try {
-      const response: ResponseType = await axios.post(`${env.base_url}/user/register`, formData);
+      console.time("Register user")
+      const response: ResponseType = await axios.post(`${env.base_url}/user/register`, data);
+      console.timeEnd("Register user")
       console.log("Response received:", response.data);
 
       Alert.alert("Success", "Account created successfully!");
-      router.replace("/(tabs)/home");
+      router.replace("/(auth)/signin");
     } catch (error: any) {
       console.error("Error occurred:", JSON.stringify(error));
       Alert.alert("Error", error.message || "An error occurred");
     } finally {
       setLoading(false);
     }
+    const response = await axios.get(`http://172.20.10.3:3000/`)
+    console.log(response.data)
+    // console.log(errors)
+  }
+  if (!userType) {
+    return <ConsentScreen setRole={setUserType} />;
   }
 
-  { return userType ? 
-   (
-    <View
+  return (
+    <SafeAreaView
       style={{
         backgroundColor: color.light.background,
         paddingHorizontal: 16,
@@ -138,20 +149,38 @@ const signin = () => {
         <KeyboardAwareScrollView showsVerticalScrollIndicator={false} style={{ flex: 1}}>
             { registerData.map(item => (
           <Controller
-          key={item.key}
+            key={item.key}
             control={control}
-            name="email"
-        defaultValue=""
-        render={({ field: { onChange, onBlur, value } }) => (
+            name={item.key}
+            rules={item.key === "email"
+              ? {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^\S+@\S+$/,
+                    message: "Invalid email",
+                  },
+                }
+              : item.key === "password"
+              ? {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Minimum 6 characters",
+                  },
+                }
+              : registerData.map(data => data.key).includes(item.key)
+                ? { required: "*" }
+                : {}
+            }
+            render={({ field: { onChange, onBlur, value } }) => (
           <AuthInputBoxes
-          onBlur={onBlur}
-              disabled={ item.key === 'type' }
-              value={formData[item.key]}
-                  label={item.label}
-                  placeholder={item.placeholder}
-                  onChangeText={(value) =>
-                    setFormData((prev) => ({ ...prev, [item.key]: value }))
-                  }
+            onBlur={onBlur}
+            disabled={item.key === "type"}
+            value={value}
+            label={item.label}
+            placeholder={item.placeholder}
+            onChangeText={onChange}
+            error={errors[item.key]?.message}
                 />
         )}
           />
@@ -168,7 +197,7 @@ const signin = () => {
             ))}
           <View style={{ marginVertical: 10, marginBottom: 100 }}>
             <Button
-              onPress={handlePress}
+              onPress={handleSubmit(onSubmit)}
               type="normal"
               color="#111111"
               buttonTextColor="#fff"
@@ -194,10 +223,8 @@ const signin = () => {
         style="dark"
         backgroundColor={loading ? "rgba(0, 0, 0, 0.5)" : "transparent"}
       />
-    </View>
-  ) : <ConsentScreen setRole={setUserType}/> }
+    </SafeAreaView>
+  )
 };
-
-// export default signin;
 
 export default signin;
