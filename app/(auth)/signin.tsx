@@ -13,40 +13,39 @@ import useAuthStore from "@/auth/authStore";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import env from "@/constants/env";
-
-const dummyData = {
-  data: {
-    firstname: "spectra",
-    lastname: "Gee",
-    email: "sarafasatar@gmail.com",
-    password: "000000",
-  },
-};
+import useAxios from "@/util/useAxios";
 
 interface ResponseType {
   data: {
-    email: string;
-    password: string;
-    firstname: string;
-    lastname: string;
+    data: {
+      user: {
+        email: string;
+        password: string;
+        firstname: string;
+        lastname: string;
+        id: string;
+        mobile: string;
+        type: string
+      }
+      token: string
+    }, 
   };
   success: boolean;
 }
 
 const signin = () => {
+  const {post, error, loading, response } = useAxios()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  // const [error, setError] = useState("")
   const { login } = useAuthStore();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   async function handlePress() {
-    setLoading(true); // Set loading to true at the start
-
-    try {
-      const response: ResponseType = await axios.post(`${env.base_url}/user/login`, formData);
-
-      const {user, token} = response.data.data;
+    // setLoading(true); // Set loading to true at the start
+    await post(`${env.base_url}/user/login`, formData)
+    const {user, token} = response
       login(
         user.id,
         user.firstname,
@@ -55,16 +54,20 @@ const signin = () => {
         user.mobile,
         user.type,
         token,
-      ); // Update Zustand store with user data
+      );
+      console.log(await user)
       Alert.alert("Success", "You are now logged in!");
       // router.replace("/(tabs)/home");
-    } catch (error: any) {
-      console.error("Error occurred:", error);
-      Alert.alert("Error", error.data || "An error occurred");
-    } finally {
-      setLoading(false); // Ensure loading is set to false in all cases
-      console.log("Loading state set to false");
-    }
+
+    // try {
+    //   // const response: ResponseType = await axios.post(`${env.base_url}/user/login`, formData);
+
+    // } catch (error: any) {
+    //     // setError(error.response.data.message)
+    // } finally {
+    //   setLoading(false); // Ensure loading is set to false in all cases
+    //   console.log("Loading state set to false");
+    // }
   }
   return (
     <SafeAreaView
@@ -114,8 +117,9 @@ const signin = () => {
               setFormData((prev) => ({ ...prev, password: value }))
             }
           />
+        <Text style={{color: "red", marginVertical: 2}}>{error}</Text>
         </View>
-        <View style={{ marginVertical: 10 }}>
+        <View style={{ marginVertical: 20 }}>
           <Button
             onPress={handlePress}
             type="normal"

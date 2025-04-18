@@ -2,10 +2,12 @@ import { Stack } from "expo-router";
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import {useEffect} from 'react';
+import useAuthStore from "@/auth/authStore";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const { startTokenExpirationCheck } = useAuthStore()
   const [loaded, error] = useFonts({
     'Satoshi-Black': require('./../assets/fonts/Satoshi-Black.otf'),
     'Satoshi-Bold': require('./../assets/fonts/Satoshi-Bold.otf'),
@@ -19,6 +21,7 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded, error]);
+  useEffect( () => startTokenExpirationCheck(), [])
 
   if (!loaded && !error) {
     return null;

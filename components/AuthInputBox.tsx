@@ -15,10 +15,10 @@ const AuthInputBox = ({
   value: string;
   label: string;
   onChangeText: (value: string) => void;
-  onBlur: () => void;
+  onBlur?: () => void;
   placeholder: string;
   disabled?: boolean;
-  error: string
+  error?: string
 }) => {
   return (
     <View style={{ flexGrow: 1 }}>

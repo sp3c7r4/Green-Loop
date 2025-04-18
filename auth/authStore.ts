@@ -1,49 +1,81 @@
 import { create } from 'zustand';
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router } from 'expo-router';
 
 interface AuthState {
   isAuthenticated: boolean;
-  authToken: string | null,
-  user: { email: string; firstname: string; lastname: string, id: string, mobile: string, type: string } | null;
-  login: (email: string, id: string, mobile: string, type: string, token: string, firstname: string, lastname: string) => void;
+  user: { email: string; firstname: string; lastname: string; id: string; mobile: string; type: string, token: string } | null;
+  login: (email: string, id: string, mobile: string, type: string, token: string, firstname: string, lastname: string ) => void;
   logout: () => void;
-  loginAuthState: () => void
+  loginAuthState: () => void;
+  startTokenExpirationCheck: () => void; // Start global token expiration check
 }
 
-const useAuthStore = create<AuthState>((set) => ({
+const useAuthStore = create<AuthState>((set, get) => ({
   isAuthenticated: false,
   user: null,
-  authToken: null,
+
   login: async (id, firstname, lastname, email, mobile, type, token) => {
-    const user = { id, firstname, lastname, email, mobile, type };
-    const authToken = token
-    await AsyncStorage.setItem('authState', JSON.stringify({ authToken, isAuthenticated: true, user }));
+    const user = { id, firstname, lastname, email, mobile, type, token };
+    const expiryTime = Date.now() + 10 * 1000; // Set expiry time to 10 seconds from now
+    await AsyncStorage.setItem(
+      'authState',
+      JSON.stringify({ isAuthenticated: true, user, expiryTime })
+    );
     set({
       isAuthenticated: true,
       user,
-      authToken
     });
   },
+
   logout: async () => {
     await AsyncStorage.removeItem('authState');
     set({
       isAuthenticated: false,
       user: null,
-      authToken: null
     });
+    router.replace("/(auth)/signin")
   },
+
   loginAuthState: async () => {
+    const storedAuthState = await AsyncStorage.getItem('authState');
+    if (storedAuthState) {
+      const { isAuthenticated, user, authToken, expiryTime } = JSON.parse(storedAuthState);
+      const tokenExpired = Date.now() > expiryTime;
+      console.log(Date.now(), expiryTime )
+      set({
+        isAuthenticated: tokenExpired ? false : isAuthenticated,
+        user: tokenExpired ? null : user,
+      });
+    }
+  },
+
+  startTokenExpirationCheck: () => {
+    const interval = setInterval(async () => {
+      console.log("Checking!!!")
       const storedAuthState = await AsyncStorage.getItem('authState');
-      console.log(storedAuthState)
       if (storedAuthState) {
-        const { isAuthenticated, user, authToken } = JSON.parse(storedAuthState);
-        set({
-          isAuthenticated,
-          user,
-          authToken
-        });
+        const { expiryTime } = JSON.parse(storedAuthState);
+        console.log(expiryTime)
+        const tokenExpired = Date.now() > expiryTime;
+        console.log(Date.now() > expiryTime)
+
+        if (tokenExpired) {
+          console.log("tokenExpired")
+          // If the token has expired, log the user out
+          await AsyncStorage.removeItem('authState');
+          set({
+            isAuthenticated: false,
+            user: null
+          });
+          router.replace("/(auth)/signin")
+        }
       }
-    },
+    }, 10000); // Check every 5 seconds
+
+    // Clear the interval when the app is closed or unmounted
+    return () => clearInterval(interval);
+  },
 }));
 
 export default useAuthStore;

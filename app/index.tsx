@@ -9,14 +9,15 @@ import * as ImagePicker from 'expo-image-picker';
 
 export default function Index() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
-  const isAuthenticated = useAuthStore(state => state.isAuthenticated)
+  const { isAuthenticated } = useAuthStore()
   const { loginAuthState } = useAuthStore()
+  const { startTokenExpirationCheck } = useAuthStore();
 
   useEffect(() => {
     loginAuthState()
     const timer = setTimeout( async () => {
       setShouldRedirect(true);
-    }, 2);
+    }, 100);
     (async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {

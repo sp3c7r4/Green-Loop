@@ -1,5 +1,5 @@
 import { View, Text, Image, FlatList, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { color } from "@/constants/color";
 import ProductTile from "@/components/ProductTile";
@@ -18,12 +18,13 @@ const headerTiles = [
 ];
 
 const home = () => {
-  const { logout } = useAuthStore();
+  const { logout, startTokenExpirationCheck } = useAuthStore();
   const [searchText, setSearchText] = useState("");
   function handleLogout() {
     logout();
-    router.replace("/(onboarding)");
+    // router.replace("/(onboarding)");
   }
+  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: color.greensync.background }}>
       <View
