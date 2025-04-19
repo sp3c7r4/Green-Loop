@@ -17,7 +17,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
 
   login: async (id, firstname, lastname, email, mobile, type, token) => {
     const user = { id, firstname, lastname, email, mobile, type, token };
-    const expiryTime = Date.now() + 10 * 1000; // Set expiry time to 10 seconds from now
+    const expiryTime = Date.now() + 25 * 60 * 1000; // Set expiry time to 25 minutes from now
     await AsyncStorage.setItem(
       'authState',
       JSON.stringify({ isAuthenticated: true, user, expiryTime })

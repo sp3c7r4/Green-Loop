@@ -39,11 +39,9 @@ const signin = () => {
     email: "",
     password: "",
   });
-  // const [error, setError] = useState("")
+  
   const { login } = useAuthStore();
-  // const [loading, setLoading] = useState(false);
   async function handlePress() {
-    // setLoading(true); // Set loading to true at the start
     await post(`${env.base_url}/user/login`, formData)
     const {user, token} = response
       login(
@@ -57,17 +55,6 @@ const signin = () => {
       );
       console.log(await user)
       Alert.alert("Success", "You are now logged in!");
-      // router.replace("/(tabs)/home");
-
-    // try {
-    //   // const response: ResponseType = await axios.post(`${env.base_url}/user/login`, formData);
-
-    // } catch (error: any) {
-    //     // setError(error.response.data.message)
-    // } finally {
-    //   setLoading(false); // Ensure loading is set to false in all cases
-    //   console.log("Loading state set to false");
-    // }
   }
   return (
     <SafeAreaView
