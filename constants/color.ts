@@ -26,7 +26,7 @@ export const color = {
   },
   greensync: {
     light_green: "#edfae6",
-    light_green2: "#e9f9e0",
+    light_green2: "rgb(211, 224, 205)",
     primary: "#5eb237",
     primary2: "#008300",
     dark_blue: "#1e293b",

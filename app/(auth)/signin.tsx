@@ -42,7 +42,9 @@ const signin = () => {
   
   const { login } = useAuthStore();
   async function handlePress() {
-    await post(`${env.base_url}/user/login`, formData)
+    await post(`${env.base_url}/user/login`, formData, {
+      timeout: 5000,
+    })
     const {user, token} = response
       login(
         user.id,
@@ -55,6 +57,7 @@ const signin = () => {
       );
       console.log(await user)
       Alert.alert("Success", "You are now logged in!");
+      router.replace("/(tabs)/home")
   }
   return (
     <SafeAreaView
@@ -104,6 +107,7 @@ const signin = () => {
               setFormData((prev) => ({ ...prev, password: value }))
             }
           />
+          {console.log(error)}
         <Text style={{color: "red", marginVertical: 2}}>{error}</Text>
         </View>
         <View style={{ marginVertical: 20 }}>
