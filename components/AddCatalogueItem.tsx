@@ -5,14 +5,42 @@ import {
   Image,
   Pressable,
   ImageBackground,
+  ScrollView,
+  TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { color } from "@/constants/color";
 import * as ImagePicker from "expo-image-picker";
+import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { State } from "react-native-gesture-handler";
+
+
+function SmallButtons({text, onPress}) {
+  return  (
+    <TouchableOpacity onPress={onPress} style={{borderRadius: 8, height: 35, backgroundColor: color.light.primary, width: "100%", borderWidth: 1, flex: 1, alignItems: "center", justifyContent: "center"}}>
+      <Text>{text}</Text>
+    </TouchableOpacity>
+  )
+}
+
+function formatDate(date: Date) {
+  return date.getDate().toString().padStart(2, '0') + '/' + (date.getMonth() + 1).toString().padStart(2, '0') + "/" + date.getFullYear();
+}
+
+function formatTime(date: Date) {
+  const hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const period = hours >= 12 ? 'PM' : 'AM';
+  const formattedHours = (hours % 12 || 12).toString(); // Convert 0 to 12 for 12-hour format
+  return `${formattedHours}${minutes !== '00' ? ':' + minutes : ''}${period}`;
+}
+
+
 
 function TextInputBox({
   placeholder,
   title,
+  onChangeText
 }: {
   placeholder: string;
   title: string;
@@ -35,6 +63,7 @@ function TextInputBox({
         }}
       >
         <TextInput
+        onChangeText={onChangeText}
           placeholder={placeholder}
           style={{ height: "100%", width: "100%", flex: 1, color: "#000" }}
         />
@@ -43,11 +72,15 @@ function TextInputBox({
   );
 }
 
-const AddCatalogueItem = () => {
+const AddCatalogueItem = ({formData, setFormData}) => {
   const [image, setImage] = useState<string | null>(null);
+  const [date, setDate] = useState(new Date());
+  
+  useEffect(() => {
+    console.log(date)
+  }, [date])
 
   async function pickImage() {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
@@ -63,18 +96,65 @@ const AddCatalogueItem = () => {
 
     console.log(image);
   }
+
+  const onChange = (event: DateTimePickerEvent, selectedDate: Date) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+    setFormData({...formData, expiry_time: currentDate})
+  };
+
+  const showMode = (currentMode: string) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+      is24Hour: true,
+    });
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+  
+  const showTimepicker = () => {
+    showMode('time');
+  };
   return (
-    <View style={{ flex: 1, marginVertical: 10 }}>
+    <ScrollView scrollsToTop={true} style={{ flex: 1, marginVertical: 10 }}>
+      <View style={{marginBottom: 10, flexDirection: "row", alignItems: "flex-end", gap: 10}}>
+        <Image source={require("@/assets/images/create_auction.png")} resizeMode="contain" style={{width: 50, height: 50}}/>
+        <View>
+            <Text style={{ fontSize: 16, fontFamily: "Satoshi-Bold", color: "#000" }}>
+            Create Auction Item
+            </Text>
+            <Text style={{ fontSize: 12, fontFamily: "Satoshi-Regular", color: "#555" }}>
+            Fill in the details below to list your product for auction.
+            </Text>
+        </View>
+      </View>
       <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          height: 150,
+          flex: 1
         }}
       >
         <View style={{ width: "48%", justifyContent: "space-between", gap: 4 }}>
-          <TextInputBox placeholder="Name" title="Product's name" />
-          <TextInputBox placeholder="Address" title="Product's location" />
+          <TextInputBox placeholder="Name" title="Product's name" onChangeText={(value: string) => setFormData({...formData, name: value})}/>
+          <TextInputBox placeholder="Brand" title="Product's brand" onChangeText={(value: string) => setFormData({...formData, brand: value})}/>
+          <TextInputBox placeholder="Issue" title="Product's issue" onChangeText={(value: string) => setFormData({...formData, issue: value})}/>
+          <TextInputBox placeholder="Condition" title="Product's condition" onChangeText={(value: string) => setFormData({...formData, condition: value})}/>
+          <TextInputBox placeholder="Address" title="Product's location" onChangeText={(value: string) => setFormData({...formData, location: value})}/>
+          <View>
+          <Text style={{marginBottom: 3, fontSize: 10, fontFamily: "Satoshi-Medium", color: "#000" }} >Date and Bid Expiry time</Text>
+            <View style={{flexDirection: "row", flex: 1, gap: 5}}>
+              <SmallButtons 
+              text={date ? `${formatDate(date)}` : "Date" } 
+              onPress={showDatepicker}
+              />
+              <SmallButtons text={date ? `${formatTime(date)}` : "Time"} onPress={showTimepicker}/>
+            </View>
+          </View>
         </View>
         <View style={{ width: "48%" }}>
           <Pressable
@@ -173,7 +253,7 @@ const AddCatalogueItem = () => {
           textAlignVertical="top"
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

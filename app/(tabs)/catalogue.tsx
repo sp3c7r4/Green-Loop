@@ -33,9 +33,21 @@ interface DataProps {
 
 const catalogue = () => {
   const sheetRef = useRef<BottomSheet>(null);
-
+  const [formData, setFormData] = useState({
+      name: "",
+      brand: "",
+      issue: "",
+      condition: "",
+      location: "",
+      expiry_time: "",
+      details: ""
+    })
+    useEffect(() => {
+      console.log(formData)
+    }, [formData])
+  
   const snapPoints = useMemo(() => ["70%", "90%"], []);
-
+  
   // callbacks
   const handleSheetChange = useCallback((index: number) => {
     console.log("handleSheetChange", index);
@@ -49,11 +61,6 @@ const catalogue = () => {
 
   const [catalogueItems, setCatalogueItems] = useState<DataProps[]>([]);
   const [searchText, setSearchText] = useState("");
-  useEffect(() => {
-    // setCatalogueItems((prev) => {
-    //   return [...prev, ...(data as DataProps[])]
-    // })
-  }, []);
   const onPressDelete = useCallback((id: number): void => {
     setCatalogueItems((prev) => {
       const filter = prev.filter((item) => item.id !== id);
@@ -177,7 +184,7 @@ const catalogue = () => {
             }}
           >
             <ScrollView showsVerticalScrollIndicator={false}>
-              <AddCatalogueItem />
+              <AddCatalogueItem formData={formData} setFormData={setFormData}/>
               <View
                 style={{
                   flexDirection: "row",

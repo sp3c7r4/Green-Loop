@@ -6,7 +6,7 @@ interface UseAxiosResponse<T> {
   error: string | null;
   response: T | null;
   get: (url: string, config?: AxiosRequestConfig) => Promise<void>;
-  post: (url: string, data?: any, config?: AxiosRequestConfig) => Promise<void>;
+  post: (url: string, data?: any, config?: AxiosRequestConfig) => Promise<void> | object;
 }
 
 function useAxios<T = any>(): UseAxiosResponse<T> {
@@ -32,9 +32,11 @@ function useAxios<T = any>(): UseAxiosResponse<T> {
     setError(null);
     try {
       const res = await axios.post<T>(url, data, config);
-      setResponse(res.data.data);
+      setResponse(res.data);
+      return res; // Return the response directly
     } catch (err: any) {
       setError(err.response?.data?.message || "An error occurred");
+      throw err; // Re-throw the error to handle it in the calling function
     } finally {
       setLoading(false);
     }

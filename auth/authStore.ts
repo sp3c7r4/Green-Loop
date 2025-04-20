@@ -27,8 +27,8 @@ const useAuthStore = create<AuthState>((set, get) => ({
       isAuthenticated: true,
       user,
     });
-    Alert.alert("Success", "You are now logged in!");
-    router.replace("/(tabs)/home")
+    // Alert.alert("Success", "You are now logged in!");
+    // router.replace("/(tabs)/home")
   },
 
   logout: async () => {

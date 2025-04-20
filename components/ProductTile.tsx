@@ -11,27 +11,27 @@ interface DataProps {
   image_url: string
   content: string
 }
-const image = "https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bWFuJTIwYXZhdGFyfGVufDB8fDB8fHww"
+const image = "https://i.ytimg.com/vi/S6lQa9LoJNo/maxresdefault.jpg"
 
 const ProductTile = ({data}:{data: DataProps}) => {
   return (
-    <View style={{width: "48%", padding: 10, height: 170, backgroundColor: "rgb(211, 224, 205)", borderRadius: 5, marginTop: 10, alignItems: "center"}}>
-      <View style={{borderRadius: 5, borderWidth: 1, width: "80%", height: "40%", alignSelf: "center" }}>
-        <Image source={{uri: data.image_url}} resizeMode='cover' style={{width: "100%", height: "100%"}}/>
+    <View style={{width: "48%", padding: 10, height: 220, backgroundColor: "rgba(60, 199, 136, 0.1)", borderRadius: 5, marginTop: 10, alignItems: "center", borderWidth: 1, borderColor: "rgb(60, 199, 136)"}}>
+      <View style={{ width: "95%", height: 80, alignSelf: "center" }}>
+        <Image source={{uri: image || data.image_url}} resizeMode='cover' style={{width: "100%", height: "100%", borderRadius: 5}}/>
       </View>
-      <Text style={{fontFamily: "Satoshi-Black", fontSize: 10, marginVertical: 3}}>{data.name}</Text>
+      <Text style={{fontFamily: "Satoshi-Medium", fontSize: 12, marginVertical: 3, flex: 1, textAlign: "center"}}>{data.name}</Text>
       <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 3, alignItems: "center", width: "100%"}}>
         <View style={{backgroundColor: color.light.primary, paddingHorizontal: "5%", paddingVertical: 3, borderRadius: 3}}>
-          <Text>Bids: 5</Text>
+          <Text style={{color: "#fff", fontFamily: "Satoshi-Regular"}}>Bids: 5</Text>
         </View>
-        <Text>Ends in 1:02:34</Text>
+        <Text style={{fontFamily: "Satoshi-Medium", fontSize: 10, color: "rgb(179, 15, 15)"}}>Ends in 1:02:34</Text>
       </View>
       <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 3, alignItems: "center", width: "100%"}}>
         <View style={{}}>
           <Text>Current Bid</Text>
-          <Text>${`${9}`}</Text>
+          <Text style={{fontSize: 25,color: color.light.primary}}>${`${9}`}</Text>
         </View>
-        <Image source={require('@/assets/icon/icon.png')} style={{}}/>
+        <Image source={require('@/assets/images/auction_icon.png')} style={{width: 35, height: 35}}/>
       </View>
     </View>
   )

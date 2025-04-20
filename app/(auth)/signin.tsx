@@ -11,7 +11,6 @@ import Button from "@/components/Button";
 import { StatusBar } from "expo-status-bar";
 import useAuthStore from "@/auth/authStore";
 import { SafeAreaView } from "react-native-safe-area-context";
-import axios from "axios";
 import env from "@/constants/env";
 import useAxios from "@/util/useAxios";
 
@@ -34,7 +33,7 @@ interface ResponseType {
 }
 
 const signin = () => {
-  const {post, error, loading, response } = useAxios()
+  const {post, error, loading } = useAxios()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -42,21 +41,30 @@ const signin = () => {
   
   const { login } = useAuthStore();
   async function handlePress() {
-    await post(`${env.base_url}/user/login`, formData, {
-      timeout: 5000,
-    })
-    const {user, token} = response
-      login(
-        user.id,
-        user.firstname,
-        user.lastname,
-        user.email,
-        user.mobile,
-        user.type,
-        token,
-      );
-      console.log(await user)
-      
+    try {
+      const res = await post(`${env.base_url}/user/login`, formData, {
+        timeout: 5000,
+      });
+
+      if (res && res.data && res.data.data) {
+        const { user, token } = res.data.data;
+        login(
+          user.id,
+          user.firstname,
+          user.lastname,
+          user.email,
+          user.mobile,
+          user.type,
+          token
+        );
+        router.replace("/(tabs)/home");
+      } else {
+        Alert.alert("Error", "Invalid response from the server.");
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      Alert.alert("Error", "Failed to log in. Please try again.");
+    }
   }
   return (
     <SafeAreaView
@@ -106,7 +114,6 @@ const signin = () => {
               setFormData((prev) => ({ ...prev, password: value }))
             }
           />
-          {console.log(error)}
         <Text style={{color: "red", marginVertical: 2}}>{error}</Text>
         </View>
         <View style={{ marginVertical: 20 }}>
