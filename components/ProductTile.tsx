@@ -26,6 +26,13 @@ const ProductTile = ({data}:{data: DataProps}) => {
         </View>
         <Text>Ends in 1:02:34</Text>
       </View>
+      <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 3, alignItems: "center", width: "100%"}}>
+        <View style={{}}>
+          <Text>Current Bid</Text>
+          <Text>${`${9}`}</Text>
+        </View>
+        <Image source={require('@/assets/icon/icon.png')} style={{}}/>
+      </View>
     </View>
   )
 }

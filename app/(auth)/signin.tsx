@@ -56,8 +56,7 @@ const signin = () => {
         token,
       );
       console.log(await user)
-      Alert.alert("Success", "You are now logged in!");
-      router.replace("/(tabs)/home")
+      
   }
   return (
     <SafeAreaView
