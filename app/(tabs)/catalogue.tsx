@@ -57,6 +57,13 @@ const catalogue = () => {
   }, []);
   const closeBottomSheet = useCallback(() => {
     sheetRef.current?.close();
+    setFormData({ name: "",
+      brand: "",
+      issue: "",
+      condition: "",
+      location: "",
+      expiry_time: "",
+      details: ""})
   }, []);
 
   const [catalogueItems, setCatalogueItems] = useState<DataProps[]>([]);
