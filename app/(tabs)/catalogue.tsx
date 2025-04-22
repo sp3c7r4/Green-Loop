@@ -20,7 +20,7 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import AddCatalogueItem from "@/components/AddCatalogueItem";
-
+// Aint gat no choice than adding a comment
 interface DataProps {
   id: number;
   name: string;
