@@ -12,7 +12,6 @@ import React, { useEffect, useState } from "react";
 import { color } from "@/constants/color";
 import * as ImagePicker from "expo-image-picker";
 import { DateTimePickerAndroid, DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { State } from "react-native-gesture-handler";
 
 
 function SmallButtons({text, onPress}) {
@@ -91,6 +90,7 @@ const AddCatalogueItem = ({formData, setFormData}) => {
     console.log(result);
 
     if (!result.canceled) {
+      setFormData({...formData, image_url: result.assets[0].uri})
       setImage(result.assets[0].uri);
     }
 
@@ -251,6 +251,7 @@ const AddCatalogueItem = ({formData, setFormData}) => {
           style={{ width: "100%", flex: 1 }}
           multiline={true}
           textAlignVertical="top"
+          onChangeText={(value: string) => setFormData({...formData, details: value})}
         />
       </View>
     </ScrollView>

@@ -40,30 +40,34 @@ const catalogue = () => {
       condition: "",
       location: "",
       expiry_time: "",
-      details: ""
+      details: "",
+      image_url: ""
     })
     useEffect(() => {
       console.log(formData)
     }, [formData])
   
-  const snapPoints = useMemo(() => ["70%", "90%"], []);
+  const snapPoints = useMemo(() => ["90%", "90%"], []);
   
   // callbacks
   const handleSheetChange = useCallback((index: number) => {
     console.log("handleSheetChange", index);
   }, []);
-  const openBottomSheet = useCallback((index) => {
+  const openBottomSheet = useCallback((index: any) => {
     sheetRef.current?.snapToIndex(index);
   }, []);
   const closeBottomSheet = useCallback(() => {
     sheetRef.current?.close();
-    setFormData({ name: "",
+    setFormData({ 
+      name: "",
       brand: "",
       issue: "",
       condition: "",
       location: "",
       expiry_time: "",
-      details: ""})
+      details: "",
+      image_url: ""
+    })
   }, []);
 
   const [catalogueItems, setCatalogueItems] = useState<DataProps[]>([]);
@@ -76,7 +80,7 @@ const catalogue = () => {
   }, []);
 
   const renderBackdrop = useCallback(
-    (props) => (
+    (props: any) => (
       <BottomSheetBackdrop
         {...props}
         disappearsOnIndex={-1} // Backdrop disappears when the sheet is closed
@@ -92,6 +96,9 @@ const catalogue = () => {
   const onPressRequest = (id: number): void => {
     console.log(id);
   };
+  function handleSubmitAuction () {
+    console.log(formData)
+  }
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView
@@ -210,6 +217,7 @@ const catalogue = () => {
                   type="normal"
                   color="#3CC687"
                   title="Add Item"
+                  onPress={handleSubmitAuction}
                   width={"49%"}
                 />
               </View>
