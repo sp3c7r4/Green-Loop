@@ -71,13 +71,14 @@ function TextInputBox({
   );
 }
 
-const AddCatalogueItem = ({formData, setFormData}) => {
+const AddCatalogueItem = ({formData, setFormData, state}) => {
   const [image, setImage] = useState<string | null>(null);
   const [date, setDate] = useState(new Date());
-  
-  useEffect(() => {
-    console.log(date)
-  }, [date])
+
+  if(state) {
+    console.log("Hello")
+    setImage("")
+  }
 
   async function pickImage() {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -90,13 +91,12 @@ const AddCatalogueItem = ({formData, setFormData}) => {
     console.log(result);
 
     if (!result.canceled) {
-      setFormData({...formData, image_url: result.assets[0].uri})
       setImage(result.assets[0].uri);
+      setFormData({...formData, image: { uri: result.assets[0].uri, name: result.assets[0].fileName, mimeType: result.assets[0].mimeType}})
     }
 
     console.log(image);
   }
-
   const onChange = (event: DateTimePickerEvent, selectedDate: Date) => {
     const currentDate = selectedDate;
     setDate(currentDate);
@@ -144,7 +144,7 @@ const AddCatalogueItem = ({formData, setFormData}) => {
           <TextInputBox placeholder="Brand" title="Product's brand" onChangeText={(value: string) => setFormData({...formData, brand: value})}/>
           <TextInputBox placeholder="Issue" title="Product's issue" onChangeText={(value: string) => setFormData({...formData, issue: value})}/>
           <TextInputBox placeholder="Condition" title="Product's condition" onChangeText={(value: string) => setFormData({...formData, condition: value})}/>
-          <TextInputBox placeholder="Address" title="Product's location" onChangeText={(value: string) => setFormData({...formData, location: value})}/>
+          <TextInputBox placeholder="Address" title="Product's location" onChangeText={(value: string) => setFormData({...formData, address: value})}/>
           <View>
           <Text style={{marginBottom: 3, fontSize: 10, fontFamily: "Satoshi-Medium", color: "#000" }} >Date and Bid Expiry time</Text>
             <View style={{flexDirection: "row", flex: 1, gap: 5}}>
@@ -251,7 +251,7 @@ const AddCatalogueItem = ({formData, setFormData}) => {
           style={{ width: "100%", flex: 1 }}
           multiline={true}
           textAlignVertical="top"
-          onChangeText={(value: string) => setFormData({...formData, details: value})}
+          onChangeText={(value: string) => setFormData({...formData, about: value})}
         />
       </View>
     </ScrollView>

@@ -21,7 +21,7 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded, error]);
-  useEffect( () => startTokenExpirationCheck(), [])
+  // useEffect( () => startTokenExpirationCheck(), [])
 
   if (!loaded && !error) {
     return null;

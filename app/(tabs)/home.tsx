@@ -8,6 +8,8 @@ import SearchBox from "@/components/SearchBox";
 import useAuthStore from "@/auth/authStore";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import useAxios from "@/util/useAxios";
+import env from "@/constants/env";
 // import {FlashList} from '@shopify/flash-list'
 const headerTiles = [
   { id: "trade", image: require("@/assets/images/trade.png") },
@@ -18,8 +20,23 @@ const headerTiles = [
 ];
 
 const home = () => {
-  const { logout, startTokenExpirationCheck } = useAuthStore();
+  const { user } = useAuthStore();
+  const { logout } = useAuthStore();
   const [searchText, setSearchText] = useState("");
+  const [items, setItems] = useState([])
+  const { get } = useAxios()
+  useEffect(() => {
+    (async function (){
+      const res = await get(`${env.base_url}/product/read/all-products`,
+        {
+          timeout: 5000,
+        }
+      );
+      if (res && res.data && res.data.data) {
+        setItems(res.data.data)
+      }
+    })()
+  },[])
   function handleLogout() {
     logout();
     // router.replace("/(onboarding)");
@@ -135,10 +152,13 @@ const home = () => {
           >
             Products
           </Text>
+        {
+          items.length === 0 ? 
+          <Text>No items</Text> :
           <FlatList
             ListFooterComponent={<View style={{ height: 300 }} />}
             ListHeaderComponent={<View style={{ height: 10 }} />}
-            data={data} // Assuming your data.json has a "products" array
+            data={items} // Assuming your data.json has a "products" array
             keyExtractor={(item) => item.id.toString()} // Ensure each item has a unique key
             numColumns={2} // Set the number of columns for the grid
             showsVerticalScrollIndicator={false}
@@ -153,16 +173,7 @@ const home = () => {
               <ProductTile data={item} /> // Pass the product data to ProductTile
             )}
           />
-          {/* <FlatList
-            ListHeaderComponent={<View style={{height: 20}}/>}
-            ListFooterComponent={<View style={{height: 270}}/>}
-            showsVerticalScrollIndicator={false}
-            data={data} // Assuming your data.json has a "products" array
-            renderItem={({ item }) => <ProductTile data={item} />} // Pass each product to ProductTile
-            keyExtractor={(item) => item.id.toString()} // Ensure each item has a unique key
-            // estimatedItemSize={100} // Provide an estimated size for better performance
-            contentContainerStyle={{ paddingBottom: 20 }} // Add padding for better spacing
-          /> */}
+        }
         </View>
       </View>
       <StatusBar style="dark"/>

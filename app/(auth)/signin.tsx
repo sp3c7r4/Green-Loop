@@ -45,6 +45,7 @@ const signin = () => {
       const res = await post(`${env.base_url}/user/login`, formData, {
         timeout: 5000,
       });
+      console.log(res)
 
       if (res && res.data && res.data.data) {
         const { user, token } = res.data.data;
@@ -62,7 +63,7 @@ const signin = () => {
         Alert.alert("Error", "Invalid response from the server.");
       }
     } catch (err) {
-      console.error("Login error:", err);
+      console.error("Login error:", err, formData);
       Alert.alert("Error", "Failed to log in. Please try again.");
     }
   }

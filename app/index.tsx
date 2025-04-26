@@ -11,7 +11,6 @@ export default function Index() {
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const { isAuthenticated } = useAuthStore()
   const { loginAuthState } = useAuthStore()
-  const { startTokenExpirationCheck } = useAuthStore();
 
   useEffect(() => {
     loginAuthState()

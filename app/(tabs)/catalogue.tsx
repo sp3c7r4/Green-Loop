@@ -2,9 +2,8 @@ import {
   View,
   Text,
   FlatList,
-  StyleSheet,
-  TextInput,
   ScrollView,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -20,36 +19,64 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import AddCatalogueItem from "@/components/AddCatalogueItem";
+import useAxios from "@/util/useAxios";
+import env from "@/constants/env";
+import useAuthStore from "@/auth/authStore";
 // Aint gat no choice than adding a comment
 interface DataProps {
   id: number;
   name: string;
   date: string;
   time: string;
-  location: string;
-  image_url: string;
+  address: string;
+  image: string;
   content: string;
 }
+const convertToFormData = (data: any) => {
+  console.log(data)
+  const form = new FormData();
+
+  Object.keys(data).forEach((key) => {
+    if (key === "image" && data[key]?.uri) {
+      // Append the image as a file
+      form.append("image", {
+        uri: data[key].uri,
+        name: data[key].name || "image.jpg",
+        type: data[key].mimeType || "image/jpeg",
+      });
+    } else {
+      // Append other fields
+      form.append(key, data[key]);
+    }
+  });
+
+  return form;
+};
 
 const catalogue = () => {
+  const { post, get, error } = useAxios()
+  const {user} = useAuthStore()
+  const [clearImg, setClearImage] = useState(false)
   const sheetRef = useRef<BottomSheet>(null);
   const [formData, setFormData] = useState({
+    name: "",
+    about: "",
+    brand: "",
+    issue: "",
+    condition: "",
+    address: "",
+    image: {
       name: "",
-      brand: "",
-      issue: "",
-      condition: "",
-      location: "",
-      expiry_time: "",
-      details: "",
-      image_url: ""
+      mimeType: "",
+      uri: ""
+    }
     })
     useEffect(() => {
       console.log(formData)
     }, [formData])
   
   const snapPoints = useMemo(() => ["90%", "90%"], []);
-  
-  // callbacks
+ 
   const handleSheetChange = useCallback((index: number) => {
     console.log("handleSheetChange", index);
   }, []);
@@ -60,14 +87,18 @@ const catalogue = () => {
     sheetRef.current?.close();
     setFormData({ 
       name: "",
+      about: "",
       brand: "",
       issue: "",
       condition: "",
-      location: "",
-      expiry_time: "",
-      details: "",
-      image_url: ""
+      address: "",
+      image: {
+        name: "",
+        mimeType: "",
+        uri: ""
+      },
     })
+    setClearImage(true)
   }, []);
 
   const [catalogueItems, setCatalogueItems] = useState<DataProps[]>([]);
@@ -96,8 +127,28 @@ const catalogue = () => {
   const onPressRequest = (id: number): void => {
     console.log(id);
   };
-  function handleSubmitAuction () {
-    console.log(formData)
+  async function handleSubmitAuction () {
+    try {
+      const transformedData = convertToFormData(formData);
+      console.log("Transformed Data:", transformedData);
+  
+      const res = await post(`${env.base_url}/product/create`, transformedData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${user?.token}`
+        }
+      });
+  
+      if (res && res.data && res.data.data) {
+        console.log("SP3C7R4 TESTING: ", res.data);
+        Alert.alert("Success", "Item added successfully!");
+      } else {
+        Alert.alert("Error", "Invalid response from the server.");
+      }
+    } catch (error) {
+      // console.error("Error submitting auction:", JSON.stringify(error));
+      Alert.alert("Error", "Failed to add the item. Please try again.");
+    }
   }
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
