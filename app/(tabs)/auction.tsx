@@ -5,8 +5,10 @@ import { StatusBar } from 'expo-status-bar';
 import { color } from '@/constants/color';
 import SmallSearchBox from '@/components/SmallSearchBox';
 import AuctionTile from '@/components/AuctionTile';
+import useAuthStore from '@/auth/authStore';
 
 const auction = () => {
+    const {auctions} = useAuthStore()
     const [searchText, setSearchText] = useState("");
     const onPressDelete = useCallback((id: number): void => {
     }, []);
@@ -37,9 +39,14 @@ const auction = () => {
       />
     </View>
     <View>
-        <FlatList data={Array.from({ length: 4 }, (_, index) => index)} renderItem={({ item }) => (
+      {
+        auctions?.data?.length === 0 ?
+        <Text>No Auctions</Text> :
+        <FlatList data={auctions?.data} renderItem={({ item }) => (
           <AuctionTile data={item}/>
         )}/>
+        // console.log("AUCTION: \n", auctions.data)
+      }
     </View>
     <StatusBar />
   </SafeAreaView>

@@ -36,6 +36,7 @@ const home = () => {
         setItems(res.data.data)
       }
     })()
+    console.log(items)
   },[])
   function handleLogout() {
     logout();
@@ -57,7 +58,7 @@ const home = () => {
           <Text
             style={{ color: "#000", fontFamily: "Satoshi-Bold", fontSize: 19 }}
           >
-            Hello <Text style={{ color: color.light.primary }}>Satar</Text>
+            Hello <Text style={{ color: color.light.primary }}>{user?.lastname}</Text>
           </Text>
           <Text
             style={{
@@ -112,7 +113,7 @@ const home = () => {
               height: 120,
             }} // Add padding for better spacing
             renderItem={({ item, index }) => (
-              <Pressable style={{ marginHorizontal: 0 }}>
+              <Pressable onPress={() => console.log(items)} style={{ marginHorizontal: 0 }}>
                 <Image
                   key={index}
                   source={item.image}

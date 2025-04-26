@@ -1,11 +1,14 @@
 import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
+import { Alert } from 'react-native';
 
 interface AuthState {
   isAuthenticated: boolean;
   user: { email: string; firstname: string; lastname: string; id: string; mobile: string; type: string, token: string } | null;
-  login: (email: string, id: string, mobile: string, type: string, token: string, firstname: string, lastname: string ) => void;
+  auctions: { data: object[] } | null;
+  products: { data: object[] } | null
+  login: (email: string, id: string, mobile: string, type: string, token: string, firstname: string, lastname: string, auction: object[], product: object[] ) => void;
   logout: () => void;
   loginAuthState: () => void;
   startTokenExpirationCheck: () => void; // Start global token expiration check
@@ -14,20 +17,25 @@ interface AuthState {
 const useAuthStore = create<AuthState>((set, get) => ({
   isAuthenticated: false,
   user: null,
-
-  login: async (id, firstname, lastname, email, mobile, type, token) => {
+  auctions: null,
+  products: null,
+  login: async (id, firstname, lastname, email, mobile, type, token, auction, product) => {
     const user = { id, firstname, lastname, email, mobile, type, token };
+    const auctions = { data: auction }
+    const products = { data: product }
+    console.log("SPECTRA: \n",auctions, products)
     const expiryTime = Date.now() + 25 * 60 * 1000; // Set expiry time to 25 minutes from now
-    await AsyncStorage.setItem(
-      'authState',
-      JSON.stringify({ isAuthenticated: true, user, expiryTime })
-    );
+    await AsyncStorage.setItem( 'authState', JSON.stringify({ isAuthenticated: true, user, expiryTime }) );
+    await AsyncStorage.setItem('auctions', JSON.stringify({ auctions }))
+    await AsyncStorage.setItem('products', JSON.stringify({ products }))
     set({
       isAuthenticated: true,
       user,
+      auctions,
+      products
     });
-    // Alert.alert("Success", "You are now logged in!");
-    // router.replace("/(tabs)/home")
+    Alert.alert("Success", "You are now logged in!");
+    router.replace("/(tabs)/home")
   },
 
   logout: async () => {
@@ -35,6 +43,8 @@ const useAuthStore = create<AuthState>((set, get) => ({
     set({
       isAuthenticated: false,
       user: null,
+      auctions: null,
+      products: null
     });
     router.replace("/(auth)/signin")
   },
@@ -46,7 +56,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
       const tokenExpired = Date.now() > expiryTime;
       console.log(Date.now(), expiryTime )
       set({
-        isAuthenticated: tokenExpired ? false : isAuthenticated,
+        isAuthenticated: tokenExpired ? false : true,
         user: tokenExpired ? null : user,
       });
     }

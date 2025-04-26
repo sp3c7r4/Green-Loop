@@ -14,12 +14,14 @@ interface DataProps {
 
 const ProductTile = ({data}:{data: DataProps}) => {
   return (
-    <View style={{width: "48%", padding: 10, height: 220, backgroundColor: "rgba(60, 199, 136, 0.1)", borderRadius: 5, marginTop: 10, alignItems: "center", borderWidth: 1, borderColor: "rgb(60, 199, 136)"}}>
-      <View style={{ width: "95%", height: 80, alignSelf: "center" }}>
-        <Image source={{uri: data.image_url}} resizeMode='cover' style={{width: "100%", height: "100%", borderRadius: 5}}/>
+    <View style={{width: "48%", padding: 10, height: 220, backgroundColor: "#fff", borderRadius: 5, marginTop: 10, alignItems: "center"}}>
+      <View style={{ width: "98%", height: 80, alignSelf: "center" }}>
+        <Image source={{uri: data.image_url}} resizeMode='cover' style={{width: "100%", height: "100%", borderRadius: 6}}/>
       </View>
-      <Text style={{fontFamily: "Satoshi-Medium", fontSize: 12, marginVertical: 3, flex: 1, textAlign: "center"}}>{data.name}</Text>
-      <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 3, alignItems: "center", width: "100%"}}>
+      <View style={{width: "95%"}}>
+        <Text style={{fontFamily: "Satoshi-Medium", fontSize: 15, marginVertical: 3, textAlign: "left"}}>{data.name}</Text>
+      </View>
+      {/* <View style={{flexDirection: "row", justifyContent: "space-between", marginVertical: 3, alignItems: "center", width: "100%"}}>
         <View style={{backgroundColor: color.light.primary, paddingHorizontal: "5%", paddingVertical: 3, borderRadius: 3}}>
           <Text style={{color: "#fff", fontFamily: "Satoshi-Regular"}}>Bids: 5</Text>
         </View>
@@ -31,7 +33,7 @@ const ProductTile = ({data}:{data: DataProps}) => {
           <Text style={{fontSize: 25,color: color.light.primary}}>${`${9}`}</Text>
         </View>
         <Image source={require('@/assets/images/auction_icon.png')} style={{width: 35, height: 35}}/>
-      </View>
+      </View> */}
     </View>
   )
 }

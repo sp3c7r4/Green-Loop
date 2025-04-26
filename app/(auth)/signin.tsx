@@ -48,7 +48,8 @@ const signin = () => {
       console.log(res)
 
       if (res && res.data && res.data.data) {
-        const { user, token } = res.data.data;
+        const { user, token, products, auctions } = res.data.data;
+        console.log("TESTING: \n",auctions, products)
         login(
           user.id,
           user.firstname,
@@ -56,9 +57,11 @@ const signin = () => {
           user.email,
           user.mobile,
           user.type,
-          token
+          token,
+          user.auctions,
+          user.products,
         );
-        router.replace("/(tabs)/home");
+        // router.replace("/(tabs)/home");
       } else {
         Alert.alert("Error", "Invalid response from the server.");
       }
