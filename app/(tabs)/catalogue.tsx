@@ -53,10 +53,31 @@ const convertToFormData = (data: any) => {
   return form;
 };
 
+const renderBackdrop = (props: any) => {
+  <BottomSheetBackdrop
+  {...props}
+  disappearsOnIndex={-1} // Backdrop disappears when the sheet is closed
+  appearsOnIndex={0} // Backdrop appears when the sheet is open
+  opacity={0.2} // Adjust the opacity of the backdrop
+  enableTouchThrough={false} // Prevent touches from passing through the backdrop
+  style={{ backgroundColor: "#000" }} // Set the overlay color
+  />
+}
+
+const snapPoints = ["90%", "90%"]
+
+const onPressDelete = (id: number, cb:(value:any) => void): void => {
+  cb((prev) => {
+    const filter = prev.filter((item) => item.id !== id);
+    return filter;
+  });
+}
+
 const catalogue = () => {
   const { post, get, error } = useAxios()
   const {user} = useAuthStore()
   const [clearImg, setClearImage] = useState(false)
+  const [catalogueItems, setCatalogueItems] = useState<DataProps[]>([]);
   const sheetRef = useRef<BottomSheet>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -71,18 +92,15 @@ const catalogue = () => {
       uri: ""
     }
     })
-    useEffect(() => {
-      console.log(formData)
-    }, [formData])
-  
-  const snapPoints = useMemo(() => ["90%", "90%"], []);
- 
-  const handleSheetChange = useCallback((index: number) => {
-    console.log("handleSheetChange", index);
-  }, []);
+
+  useEffect(() => {
+    console.log(formData)
+  }, [formData])
+
   const openBottomSheet = useCallback((index: any) => {
     sheetRef.current?.snapToIndex(index);
   }, []);
+
   const closeBottomSheet = useCallback(() => {
     sheetRef.current?.close();
     setFormData({ 
@@ -101,28 +119,8 @@ const catalogue = () => {
     setClearImage(true)
   }, []);
 
-  const [catalogueItems, setCatalogueItems] = useState<DataProps[]>([]);
   const [searchText, setSearchText] = useState("");
-  const onPressDelete = useCallback((id: number): void => {
-    setCatalogueItems((prev) => {
-      const filter = prev.filter((item) => item.id !== id);
-      return filter;
-    });
-  }, []);
-
-  const renderBackdrop = useCallback(
-    (props: any) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1} // Backdrop disappears when the sheet is closed
-        appearsOnIndex={0} // Backdrop appears when the sheet is open
-        opacity={0.2} // Adjust the opacity of the backdrop
-        enableTouchThrough={false} // Prevent touches from passing through the backdrop
-        style={{ backgroundColor: "#000" }} // Set the overlay color
-      />
-    ),
-    []
-  );
+  
 
   const onPressRequest = (id: number): void => {
     console.log(id);
@@ -205,7 +203,7 @@ const catalogue = () => {
               renderItem={({ item }) => (
                 <CartContainer
                   data={item}
-                  onPressDelete={() => onPressDelete(item.id)}
+                  onPressDelete={() => onPressDelete(item.id, setCatalogueItems)}
                   onPressRequest={() => onPressRequest(item.id)}
                 />
               )}
@@ -230,7 +228,6 @@ const catalogue = () => {
           index={-1} // Set the initial index to -1 to prevent it from popping up automatically
           snapPoints={snapPoints}
           enableDynamicSizing={false}
-          onChange={handleSheetChange}
           backgroundStyle={{ backgroundColor: color.greensync.background }}
           handleIndicatorStyle={{
             backgroundColor: "#000",

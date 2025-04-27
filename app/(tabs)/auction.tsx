@@ -8,7 +8,8 @@ import AuctionTile from '@/components/AuctionTile';
 import useAuthStore from '@/auth/authStore';
 
 const auction = () => {
-    const {auctions} = useAuthStore()
+    const { auctions } = useAuthStore()
+    console.log("Auctions: ", JSON.stringify(auctions))
     const [searchText, setSearchText] = useState("");
     const onPressDelete = useCallback((id: number): void => {
     }, []);
@@ -21,22 +22,19 @@ const auction = () => {
     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginVertical: 10, }}>
       <View>
         <Text
-          style={{ color: "#000", fontFamily: "Satoshi-Bold", fontSize: 17 }}
+          style={{ color: "#000", fontFamily: "Satoshi-Bold", fontSize: 25 }}
         >
-          Welcome to <Text style={{ color: color.light.primary }}>Auction</Text>
+          Auctions
         </Text>
-        <Text
-          style={{ color: "#000", fontFamily: "Satoshi-Medium", fontSize: 8 }}
-        >
-          {" "}
-          Easily review and manage your auctions.{" "}
+        <Text style={{color: "#000",fontFamily: "Satoshi-Medium", fontSize: 8 }}>
+          Easily review and manage your items here.{" "}
         </Text>
       </View>
-      <SmallSearchBox
+      {/* <SmallSearchBox
         onChangeText={(value) => setSearchText(value)}
         value={searchText}
         onPress={() => console.log(searchText)}
-      />
+      /> */}
     </View>
     <View>
       {

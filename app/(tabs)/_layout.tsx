@@ -7,10 +7,25 @@ import CartSvg from "@/svgs/tabs/cartSvg";
 import { color } from "@/constants/color";
 import ProfileSvg from "@/svgs/tabs/profileSvg";
 import AuctionSvg from "@/svgs/tabs/auctionSvg";
+import { Pressable } from 'react-native';
 
+export default function HapticTab(props) {
+  const { children, style, ...rest } = props;
+
+  return (
+    <Pressable
+      {...rest} // pass all important props like onPress, accessibility, etc.
+      android_ripple={null}
+      style={style} // keep the style
+    >
+      {children}
+    </Pressable>
+  );
+}
 const _layout = () => {
   return (
     <Tabs
+    
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -20,7 +35,11 @@ const _layout = () => {
           elevation: 0,
           paddingTop: 5,
         },
+        tabBarButton: (props) => <HapticTab {...props} />, // use your custom Pressable
+        animation: "fade",
+        headerPressColor: "transparent"
       }}
+      
     >
       <Tabs.Screen
         name="home"
@@ -29,7 +48,7 @@ const _layout = () => {
             return (
               <View>
                 <Home size={size} state={focused} />
-                {focused ? (
+                {focused && (
                   <View
                     style={{
                       width: 25,
@@ -40,8 +59,6 @@ const _layout = () => {
                       backgroundColor: color.light.primary,
                     }}
                   />
-                ) : (
-                  ""
                 )}
               </View>
             );

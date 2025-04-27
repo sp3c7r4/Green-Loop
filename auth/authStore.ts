@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { Alert } from 'react-native';
+import auction from '@/app/(tabs)/auction';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -51,6 +52,9 @@ const useAuthStore = create<AuthState>((set, get) => ({
 
   loginAuthState: async () => {
     const storedAuthState = await AsyncStorage.getItem('authState');
+    const { products } = JSON.parse( await AsyncStorage.getItem('products') )
+    const { auctions } = JSON.parse( await AsyncStorage.getItem('auctions') )
+    console.log("Sp3c7r4: ",auctions, products)
     if (storedAuthState) {
       const { isAuthenticated, user, authToken, expiryTime } = JSON.parse(storedAuthState);
       const tokenExpired = Date.now() > expiryTime;
@@ -58,6 +62,8 @@ const useAuthStore = create<AuthState>((set, get) => ({
       set({
         isAuthenticated: tokenExpired ? false : true,
         user: tokenExpired ? null : user,
+        auctions: tokenExpired ? null :  auctions,
+        products: tokenExpired ? null : products,
       });
     }
   },
@@ -73,12 +79,15 @@ const useAuthStore = create<AuthState>((set, get) => ({
         console.log(Date.now() > expiryTime)
 
         if (tokenExpired) {
-          console.log("tokenExpired")
-          // If the token has expired, log the user out
+          console.log("TOKEN EXPIRED")
           await AsyncStorage.removeItem('authState');
+          await AsyncStorage.removeItem('auctions');
+          await AsyncStorage.removeItem('products');
           set({
             isAuthenticated: false,
-            user: null
+            user: null,
+            auctions: null,
+            products: null
           });
           router.replace("/(auth)/signin")
         }

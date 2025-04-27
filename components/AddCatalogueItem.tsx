@@ -36,14 +36,7 @@ function formatTime(date: Date) {
 
 
 
-function TextInputBox({
-  placeholder,
-  title,
-  onChangeText
-}: {
-  placeholder: string;
-  title: string;
-}) {
+function TextInputBox({placeholder,title,onChangeText}: {placeholder: string;title: string;}) {
   return (
     <View style={{ gap: 4 }}>
       <Text
@@ -65,7 +58,7 @@ function TextInputBox({
         onChangeText={onChangeText}
           placeholder={placeholder}
           style={{ height: "100%", width: "100%", flex: 1, color: "#000" }}
-        />
+          />
       </View>
     </View>
   );
@@ -79,7 +72,22 @@ const AddCatalogueItem = ({formData, setFormData, state}) => {
     console.log("Hello")
     setImage("")
   }
-
+  const showMode = (currentMode: string) => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+      is24Hour: true,
+    });
+  };
+  
+  const showDatepicker = () => {
+    showMode('date');
+  };
+  
+  const showTimepicker = () => {
+    showMode('time');
+  };
   async function pickImage() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
@@ -103,22 +111,6 @@ const AddCatalogueItem = ({formData, setFormData, state}) => {
     setFormData({...formData, expiry_time: currentDate})
   };
 
-  const showMode = (currentMode: string) => {
-    DateTimePickerAndroid.open({
-      value: date,
-      onChange,
-      mode: currentMode,
-      is24Hour: true,
-    });
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-  
-  const showTimepicker = () => {
-    showMode('time');
-  };
   return (
     <ScrollView scrollsToTop={true} style={{ flex: 1, marginVertical: 10 }}>
       <View style={{marginBottom: 10, flexDirection: "row", alignItems: "flex-end", gap: 10}}>
