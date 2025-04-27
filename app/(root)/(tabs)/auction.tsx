@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, Pressable } from 'react-native'
 import React, { useCallback, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -6,6 +6,7 @@ import { color } from '@/constants/color';
 import SmallSearchBox from '@/components/SmallSearchBox';
 import AuctionTile from '@/components/AuctionTile';
 import useAuthStore from '@/auth/authStore';
+import { router } from 'expo-router';
 
 const auction = () => {
     const { auctions } = useAuthStore()
@@ -41,7 +42,7 @@ const auction = () => {
         auctions?.data?.length === 0 ?
         <Text>No Auctions</Text> :
         <FlatList data={auctions?.data} renderItem={({ item }) => (
-          <AuctionTile data={item}/>
+            <AuctionTile data={item}/>
         )}/>
         // console.log("AUCTION: \n", auctions.data)
       }

@@ -28,7 +28,7 @@ export default function Index() {
 
   if (shouldRedirect) {
     if(isAuthenticated) {
-      return <Redirect href="/(tabs)/home"/>
+      return <Redirect href="/(root)/(tabs)/home"/>
     }
     return <Redirect href="/(onboarding)" />;
   }

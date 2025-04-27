@@ -61,7 +61,6 @@ const signin = () => {
           user.auctions,
           user.products,
         );
-        // router.replace("/(tabs)/home");
       } else {
         Alert.alert("Error", "Invalid response from the server.");
       }
@@ -75,6 +74,7 @@ const signin = () => {
       style={{
         backgroundColor: color.greensync.background,
         paddingHorizontal: 16,
+        marginTop: 5,
         flex: 1,
       }}
     >

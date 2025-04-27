@@ -7,13 +7,6 @@ import { color } from "@/constants/color";
 
 const Header = ({ onPress }: { onPress: () => void }) => {
   return (
-    <SafeAreaView
-      style={{
-        flexDirection: "row",
-        marginTop: 10,
-        justifyContent: "space-between",
-      }}
-    >
       <Pressable onPress={onPress}>
         <View
           style={{
@@ -27,9 +20,8 @@ const Header = ({ onPress }: { onPress: () => void }) => {
         >
           <Ionicons name="arrow-back" size={24} color={color.light.primary} />
         </View>
-      </Pressable>
       <StatusBar style="auto" />
-    </SafeAreaView>
+      </Pressable>
   );
 };
 

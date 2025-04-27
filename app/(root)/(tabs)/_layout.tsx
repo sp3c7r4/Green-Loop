@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { Tabs } from "expo-router";
+import { Stack, Tabs } from "expo-router";
 import Home from "@/svgs/tabs/homeSvg";
 import CatalogueSVG from "@/svgs/tabs/catalogueSvg";
 import CartSvg from "@/svgs/tabs/cartSvg";
@@ -9,7 +9,7 @@ import ProfileSvg from "@/svgs/tabs/profileSvg";
 import AuctionSvg from "@/svgs/tabs/auctionSvg";
 import { Pressable } from 'react-native';
 
-export default function HapticTab(props) {
+function HapticTab(props: any) {
   const { children, style, ...rest } = props;
 
   return (
@@ -22,6 +22,7 @@ export default function HapticTab(props) {
     </Pressable>
   );
 }
+
 const _layout = () => {
   return (
     <Tabs

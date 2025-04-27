@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { Alert } from 'react-native';
-import auction from '@/app/(tabs)/auction';
+import auction from '@/app/(root)/(tabs)/auction';
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -36,7 +36,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
       products
     });
     Alert.alert("Success", "You are now logged in!");
-    router.replace("/(tabs)/home")
+    router.replace("/(root)/(tabs)/home")
   },
 
   logout: async () => {
